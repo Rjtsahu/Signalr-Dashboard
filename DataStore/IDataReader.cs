@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Sahurjt.Signalr.Dashboard.DataStore
 {
-    interface IDataReader
+    interface IDataReader<T>
     {
+        T Get();
+        IEnumerable<T> GetAll();
     }
 }
