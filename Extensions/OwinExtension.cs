@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Owin;
+using Sahurjt.Signalr.Dashboard.Middleware;
 
 namespace Sahurjt.Signalr.Dashboard.Extensions
 {
-    class OwinExtension
+    public static class OwinExtension
     {
+        public static IAppBuilder UseSignalrDashboard(this IAppBuilder app)
+        {
+            app.Use(typeof(SignalrInterceptorMiddleware));
+
+            return app;
+        }
     }
 }
