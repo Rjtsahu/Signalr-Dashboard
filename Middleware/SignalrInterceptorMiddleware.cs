@@ -15,6 +15,11 @@ namespace Sahurjt.Signalr.Dashboard.Middleware
             this.next = next;
         }
 
+        /// <summary>
+        /// This is a middleware method will be invoked when a request is accepted in pipeline.
+        /// </summary>
+        /// <param name="environment">Environment detail for this pipelined request.</param>
+        /// <returns>async task for next middleware in pipeline</returns>
         public async Task Invoke(IDictionary<string, object> environment)
         {
             Console.WriteLine("entering");
