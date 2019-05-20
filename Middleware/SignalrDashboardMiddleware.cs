@@ -4,13 +4,13 @@ using System.Threading.Tasks;
 
 namespace Sahurjt.Signalr.Dashboard.Middleware
 {
-    using AppFunc = Func<IDictionary<string, object>, Task>;
+     using AppFunc = Func<IDictionary<string, object>, Task>;
 
-    internal class SignalrInterceptorMiddleware
+    internal class SignalrDashboardMiddleware
     {
         private readonly AppFunc next;
 
-        public SignalrInterceptorMiddleware(AppFunc next)
+        public SignalrDashboardMiddleware(AppFunc next)
         {
             this.next = next;
         }
