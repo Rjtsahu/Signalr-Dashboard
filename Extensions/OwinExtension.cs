@@ -1,7 +1,7 @@
 ﻿using Owin;
 using Microsoft.Owin;
 using Sahurjt.Signalr.Dashboard.Middleware;
-
+using Owin.WebSocket.Extensions;
 namespace Sahurjt.Signalr.Dashboard.Extensions
 {
     public static class OwinExtension
@@ -22,7 +22,7 @@ namespace Sahurjt.Signalr.Dashboard.Extensions
 
         public static IAppBuilder UseSignalrDashboard(this IAppBuilder app, string url)
         {
-            app.MapWhen(p => p.Request.Path.StartsWithSegments(PathString.FromUriComponent(_defaultSignalrSegment)), subApp => subApp.RunInterceptor());
+            app.RunInterceptor();
 
             app.MapWhen(p => p.Request.Path.StartsWithSegments(PathString.FromUriComponent(url)), subApp => subApp.RunDashboard());
 
@@ -35,7 +35,8 @@ namespace Sahurjt.Signalr.Dashboard.Extensions
         }
         private static IAppBuilder RunInterceptor(this IAppBuilder app)
         {
-            return app.Use(typeof(SignalrInterceptorMiddleware));
+            return app.Use<SignalrInterceptorMiddleware>();
         }
+
     }
 }

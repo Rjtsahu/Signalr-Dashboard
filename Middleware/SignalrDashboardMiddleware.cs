@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Web;
+using Microsoft.Owin;
 
 namespace Sahurjt.Signalr.Dashboard.Middleware
 {
-     using AppFunc = Func<IDictionary<string, object>, Task>;
 
-    internal class SignalrDashboardMiddleware
+    internal class SignalrDashboardMiddleware : OwinMiddleware
     {
-        private readonly AppFunc next;
 
-        public SignalrDashboardMiddleware(AppFunc next)
+        public SignalrDashboardMiddleware(OwinMiddleware next) : base(next)
         {
-            this.next = next;
         }
 
         /// <summary>
@@ -20,10 +19,10 @@ namespace Sahurjt.Signalr.Dashboard.Middleware
         /// </summary>
         /// <param name="environment">Environment detail for this pipelined request.</param>
         /// <returns>async task for next middleware in pipeline</returns>
-        public async Task Invoke(IDictionary<string, object> environment)
+        public override async Task Invoke(IOwinContext environment)
         {
             Console.WriteLine("entering");
-            await next.Invoke(environment);
+            await Next.Invoke(environment);
             Console.WriteLine("exiting");
         }
     }
