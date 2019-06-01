@@ -32,6 +32,8 @@ namespace Sahurjt.Signalr.Dashboard.Extensions
         {
             return app.Use(typeof(SignalrDashboardMiddleware));
         }
+
+
         private static IAppBuilder RunInterceptor(this IAppBuilder app)
         {
             return app.Use<SignalrInterceptorMiddleware>();
