@@ -1,7 +1,6 @@
 ﻿using Owin;
 using Microsoft.Owin;
 using Sahurjt.Signalr.Dashboard.Middleware;
-using Owin.WebSocket.Extensions;
 namespace Sahurjt.Signalr.Dashboard.Extensions
 {
     public static class OwinExtension
