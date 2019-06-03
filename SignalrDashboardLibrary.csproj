@@ -60,11 +60,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\InterceptorConfiguration.cs" />
     <Compile Include="DataStore\IConnection.cs" />
     <Compile Include="DataStore\IDataReader.cs" />
     <Compile Include="DataStore\IDataWriter.cs" />
     <Compile Include="Extensions\OwinExtension.cs" />
     <Compile Include="Helpers\HttpHelper.cs" />
+    <Compile Include="Helpers\LogHelper.cs" />
     <Compile Include="Middleware\SignalrDashboardMiddleware.cs" />
     <Compile Include="Middleware\SignalrInterceptorMiddleware.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

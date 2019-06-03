@@ -3,15 +3,21 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web;
 using Microsoft.Owin;
+using Sahurjt.Signalr.Dashboard.Configuration;
+using Sahurjt.Signalr.Dashboard.Helpers;
 
 namespace Sahurjt.Signalr.Dashboard.Middleware
 {
 
     internal class SignalrDashboardMiddleware : OwinMiddleware
     {
+        private readonly string dashboardUrlStartSegment;
+        private readonly InterceptorConfiguration configuration;
 
-        public SignalrDashboardMiddleware(OwinMiddleware next) : base(next)
+        public SignalrDashboardMiddleware(OwinMiddleware next, string dashboardUrl, InterceptorConfiguration config) : base(next)
         {
+            dashboardUrlStartSegment = dashboardUrl;
+            configuration = config;
         }
 
         /// <summary>
@@ -21,9 +27,15 @@ namespace Sahurjt.Signalr.Dashboard.Middleware
         /// <returns>async task for next middleware in pipeline</returns>
         public override async Task Invoke(IOwinContext environment)
         {
-            Console.WriteLine("entering");
+            LogHelper.Log("entering");
+
+            LogHelper.Log(" signalrUrlStartSegment", dashboardUrlStartSegment);
+
+            LogHelper.Log("  request url ", environment.Request.Path);
             await Next.Invoke(environment);
-            Console.WriteLine("exiting");
+            LogHelper.Log($"  request url ", environment.Response.StatusCode);
+
+            LogHelper.Log("exiting");
         }
     }
 }
