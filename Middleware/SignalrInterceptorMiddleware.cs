@@ -1,18 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.Owin;
+using Sahurjt.Signalr.Dashboard.Configuration;
+using Sahurjt.Signalr.Dashboard.Helpers;
 
 namespace Sahurjt.Signalr.Dashboard.Middleware
 {
-    using AppFunc = Func<IDictionary<string, object>, Task>;
 
-    internal class SignalrInterceptorMiddleware
+    internal class SignalrInterceptorMiddleware : OwinMiddleware
     {
-        private readonly AppFunc next;
+        private readonly string signalrUrlStartSegment;
+        private readonly InterceptorConfiguration configuration;
 
-        public SignalrInterceptorMiddleware(AppFunc next)
+        public SignalrInterceptorMiddleware(OwinMiddleware next, string signalrUrl, InterceptorConfiguration config) : base(next)
         {
-            this.next = next;
+            signalrUrlStartSegment = signalrUrl;
+            configuration = config;
         }
 
         /// <summary>
@@ -20,11 +23,17 @@ namespace Sahurjt.Signalr.Dashboard.Middleware
         /// </summary>
         /// <param name="environment">Environment detail for this pipelined request.</param>
         /// <returns>async task for next middleware in pipeline</returns>
-        public async Task Invoke(IDictionary<string, object> environment)
+        public override async Task Invoke(IOwinContext environment)
         {
-            Console.WriteLine("entering");
-            await next.Invoke(environment);
-            Console.WriteLine("exiting");
+            LogHelper.Log("entering");
+
+            LogHelper.Log(" signalrUrlStartSegment ", signalrUrlStartSegment);
+
+            LogHelper.Log(" request url ", environment.Request.Path);
+            await Next.Invoke(environment);
+            LogHelper.Log($" request url  ", environment.Response.StatusCode);
+
+            LogHelper.Log("exiting");
         }
     }
 }
