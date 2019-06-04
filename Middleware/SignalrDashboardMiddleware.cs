@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using Microsoft.Owin;
@@ -37,5 +38,6 @@ namespace Sahurjt.Signalr.Dashboard.Middleware
 
             LogHelper.Log("exiting");
         }
+
     }
 }
