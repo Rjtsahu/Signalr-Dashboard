@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Data.SQLite;
+using Sahurjt.Signalr.Dashboard.Extensions;
 
 namespace Sahurjt.Signalr.Dashboard.DataStore
 {
@@ -28,12 +29,18 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
             throw new NotImplementedException();
         }
 
-        private void ExecuteScalar() {
-            using (var conn = new SQLiteConnection()) {
-                using (var cmd = new SQLiteCommand()) {
-
+        private void ExecuteScalar()
+        {
+            using (var conn = new SQLiteConnection())
+            {
+                using (var cmd = new SQLiteCommand())
+                {
+                    var r = cmd.ExecuteReader();
+                    cmd.Parameters.MapSQLiteParameters("", "");
                 }
             }
         }
+
+
     }
 }

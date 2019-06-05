@@ -85,6 +85,7 @@
     <Compile Include="DataStore\ISqlOperation.cs" />
     <Compile Include="DataStore\SqliteOperation.cs" />
     <Compile Include="Extensions\OwinExtension.cs" />
+    <Compile Include="Extensions\SqlReaderExtensions.cs" />
     <Compile Include="Helpers\HttpHelper.cs" />
     <Compile Include="Helpers\LogHelper.cs" />
     <Compile Include="Middleware\SignalrDashboardMiddleware.cs" />

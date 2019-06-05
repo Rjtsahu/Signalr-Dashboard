@@ -9,9 +9,9 @@ namespace Sahurjt.Signalr.Dashboard.Extensions
     {
         public static T ToObject<T>(this DbDataReader reader)
         {
-            if (reader == null || !reader.Read()) return default;
+            if (reader == null || !reader.Read()) return default(T);
 
-            return SqlReaderExtensions.DbDataReaderToObject<T>(reader);
+            return DbDataReaderToObject<T>(reader);
         }
 
         public static IList<T> ToList<T>(this DbDataReader reader)
@@ -20,7 +20,7 @@ namespace Sahurjt.Signalr.Dashboard.Extensions
 
             while (reader.Read())
             {
-                items.Add(SqlReaderExtensions.DbDataReaderToObject<T>(reader));
+                items.Add(DbDataReaderToObject<T>(reader));
             }
             return items;
         }
@@ -45,5 +45,7 @@ namespace Sahurjt.Signalr.Dashboard.Extensions
 
             return obj;
         }
+
+
     }
 }
