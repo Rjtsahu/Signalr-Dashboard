@@ -9,22 +9,22 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
     internal class SqliteOperation : ISqlOperation
     {
 
-        public int Execute(string executeSql, params object[] parameters)
+        public int Execute(ExecuteSqlQuery executeSql, params object[] parameters)
         {
             throw new NotImplementedException();
         }
 
-        public Task<int> ExecuteAsync(string executeSql, params object[] parameters)
+        public Task<int> ExecuteAsync(ExecuteSqlQuery executeSql, params object[] parameters)
         {
             throw new NotImplementedException();
         }
 
-        public T Select<T>(string selectSql, params object[] parameters)
+        public T Select<T>(SelectSqlQuery selectSql, params object[] parameters)
         {
             throw new NotImplementedException();
         }
 
-        public IList<T> SelectMultiple<T>(string selectSql, params object[] parameters)
+        public IList<T> SelectMultiple<T>(SelectSqlQuery selectSql, params object[] parameters)
         {
             throw new NotImplementedException();
         }
