@@ -1,41 +1,37 @@
 ﻿using System;
+using System.Collections.Generic;
+
 namespace Sahurjt.Signalr.Dashboard.DataStore
 {
     internal class SqliteQueryProvider : ISqlQueryProvider
     {
-        private readonly string InsertRecord__Request = "insert into dummy_table (@a,@b)";
-        private readonly string GetAll__Request = "select * from dummy_table where col = @col";
-
 
         public string DatabaseProviderName => "SQLite3";
 
+        public IDictionary<ExecuteSqlQuery, string> ExecuteSqls => new Dictionary<ExecuteSqlQuery, string> {
+            {ExecuteSqlQuery.InsertRecord__Request ,"insert into dummy_table (@a,@b)" }
+        };
 
-        public string GetExecuteSql(ExecuteSqlQuery executeSqlEnum)
+        public IDictionary<SelectSqlQuery, string> SelectSqls => new Dictionary<SelectSqlQuery, string> {
+            {SelectSqlQuery.GetAll__Request , "select * from dummy_table where col = @col" }
+        };
+
+        public string GetSql(ExecuteSqlQuery executeSqlEnum)
         {
-            var query = "";
-            switch (executeSqlEnum)
+            if (ExecuteSqls.ContainsKey(executeSqlEnum))
             {
-                case ExecuteSqlQuery.InsertRecord__Request:
-                    query = InsertRecord__Request;
-                    break;
-                default:
-                    throw new ArgumentException($" {DatabaseProviderName} doesn't provide exec sql query for enum: {executeSqlEnum.ToString()}");
+                return ExecuteSqls[executeSqlEnum];
             }
-            return query;
+            throw new ArgumentException($" {DatabaseProviderName} doesn't provide exec sql query for enum: {executeSqlEnum.ToString()}");
         }
 
-        public string GetSelectSql(SelectSqlQuery selectSqlEnum)
+        public string GetSql(SelectSqlQuery selectSqlEnum)
         {
-            var query = "";
-            switch (selectSqlEnum)
+            if (SelectSqls.ContainsKey(selectSqlEnum))
             {
-                case SelectSqlQuery.GetAll__Request:
-                    query = GetAll__Request;
-                    break;
-                default:
-                    throw new ArgumentException($" {DatabaseProviderName} doesn't provide select sql query for enum: {selectSqlEnum.ToString()}");
+                return SelectSqls[selectSqlEnum];
             }
-            return query;
+            throw new ArgumentException($" {DatabaseProviderName} doesn't provide select sql query for enum: {selectSqlEnum.ToString()}");
         }
     }
 }

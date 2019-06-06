@@ -1,9 +1,13 @@
-﻿namespace Sahurjt.Signalr.Dashboard.DataStore
+﻿using System.Collections.Generic;
+
+namespace Sahurjt.Signalr.Dashboard.DataStore
 {
     interface ISqlQueryProvider
     {
         string DatabaseProviderName { get; }
-        string GetExecuteSql(ExecuteSqlQuery executeSqlEnum);
-        string GetSelectSql(SelectSqlQuery selectSqlEnum);
+        IDictionary<ExecuteSqlQuery, string> ExecuteSqls { get; }
+        IDictionary<SelectSqlQuery, string> SelectSqls { get; }
+        string GetSql(ExecuteSqlQuery executeSqlEnum);
+        string GetSql(SelectSqlQuery selectSqlEnum);
     }
 }
