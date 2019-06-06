@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Sahurjt.Signalr.Dashboard.DataStore
 {
@@ -22,7 +21,7 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
             {
                 return ExecuteSqls[executeSqlEnum];
             }
-            throw new ArgumentException($" {DatabaseProviderName} doesn't provide exec sql query for enum: {executeSqlEnum.ToString()}");
+            throw new KeyNotFoundException($" {DatabaseProviderName} doesn't provide exec sql query for enum: {executeSqlEnum.ToString()}");
         }
 
         public string GetSql(SelectSqlQuery selectSqlEnum)
@@ -31,7 +30,7 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
             {
                 return SelectSqls[selectSqlEnum];
             }
-            throw new ArgumentException($" {DatabaseProviderName} doesn't provide select sql query for enum: {selectSqlEnum.ToString()}");
+            throw new KeyNotFoundException($" {DatabaseProviderName} doesn't provide select sql query for enum: {selectSqlEnum.ToString()}");
         }
     }
 }
