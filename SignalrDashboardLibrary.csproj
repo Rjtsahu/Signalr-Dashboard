@@ -67,6 +67,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\InterceptorConfiguration.cs" />
+    <Compile Include="DataStore\Dto\DtoExtensions.cs" />
+    <Compile Include="DataStore\Dto\HubDataDto.cs" />
+    <Compile Include="DataStore\Dto\IDataTableObject.cs" />
+    <Compile Include="DataStore\Dto\RequestDto.cs" />
+    <Compile Include="DataStore\Dto\SessionDto.cs" />
+    <Compile Include="DataStore\Dto\SessionReportDto.cs" />
     <Compile Include="DataStore\ISqlOperation.cs" />
     <Compile Include="DataStore\ISqlQueryProvider.cs" />
     <Compile Include="DataStore\SqliteOperation.cs" />
