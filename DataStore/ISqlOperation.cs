@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Data.Common;
 using System.Threading.Tasks;
 
 namespace Sahurjt.Signalr.Dashboard.DataStore
@@ -10,5 +11,7 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
 
         int Execute(ExecuteSqlQuery executeSql, params object[] parameters);
         Task<int> ExecuteAsync(ExecuteSqlQuery executeSql, params object[] parameters);
+
+        DbCommand AddSqlParameters(DbCommand dbCommand, string sql, params object[] parameters);
     }
 }
