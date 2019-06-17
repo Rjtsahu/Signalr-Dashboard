@@ -13,7 +13,7 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
         }
         protected override string ProviderName => "Sqlite3";
 
-        public override DbCommand AddSqlParameters(DbCommand dbCommand, string sql, params object[] parameters)
+        protected override DbCommand AddSqlParameters(DbCommand dbCommand, string sql, params object[] parameters)
         {
             var sqlCommand = dbCommand as SQLiteCommand;
             sqlCommand.Parameters.MapSQLiteParameters(sql, parameters);

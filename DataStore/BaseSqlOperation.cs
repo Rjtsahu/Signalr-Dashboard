@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
 using System.Threading.Tasks;
 using Sahurjt.Signalr.Dashboard.Extensions;
+using Sahurjt.Signalr.Dashboard.Helpers;
 
 namespace Sahurjt.Signalr.Dashboard.DataStore
 {
@@ -39,13 +41,18 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
 
             try
             {
+                _dbCommand.Connection = _dbConnection;
                 _dbConnection.Open();
                 _dbCommand.CommandText = sqlQuery;
-                _dbCommand.Connection = _dbConnection;
 
                 var reader = _dbCommand.ExecuteReader();
 
                 return reader.ToObject<T>();
+            }
+            catch (Exception e)
+            {
+                LogHelper.Log("Error ",e.Message, e.StackTrace);
+                throw e;
             }
             finally
             {
@@ -68,6 +75,11 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
 
                 return reader.ToList<T>();
             }
+            catch (Exception e)
+            {
+                LogHelper.Log("Error ", e.Message, e.StackTrace);
+                throw e;
+            }
             finally
             {
                 _dbConnection.Close();
@@ -75,7 +87,7 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
         }
 
 
-        public abstract DbCommand AddSqlParameters(DbCommand dbCommand, string sql, params object[] parameters);
+        protected abstract DbCommand AddSqlParameters(DbCommand dbCommand, string sql, params object[] parameters);
 
         private int ExecuteNonQuery(string sqlQuery, params object[] parameters)
         {
@@ -88,6 +100,11 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
                 _dbCommand.CommandText = sqlQuery;
                 _dbCommand.Connection = _dbConnection;
                 result = _dbCommand.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                LogHelper.Log("Error ", e.Message, e.StackTrace);
+                throw e;
             }
             finally
             {

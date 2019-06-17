@@ -15,11 +15,10 @@ namespace Sahurjt.Signalr.Dashboard.Extensions
                 throw new ArgumentException($"No of argument in sql({paramsInSql.Count}) doesn't match with arguments in parameter list ({parameters?.Length}).");
             }
 
-            paramsInSql.Zip(parameters, (paramKey, paramValue) =>
+            for (int i = 0; i < paramsInSql.Count; i++)
             {
-                sqliteParameter.AddWithValue(paramKey, paramValue);
-                return paramKey;
-            });
+                sqliteParameter.AddWithValue(paramsInSql[i], parameters[i]);
+            }
         }
     }
 }
