@@ -2,11 +2,18 @@
 {
     internal enum SelectSqlQuery
     {
-        GetAll__Request
+        GetAll_Request,
+        GetAll_Session,
+        GetAll_HubData,
+        GetAll_SessionReport
     }
 
     internal enum ExecuteSqlQuery
     {
-        InsertRecord__Request
+        Create_DatabaseTables,
+        InsertRow_Request,
+        InsertRow_Session,
+        InsertRow_HubData,
+        InsertRow_SessionReport
     }
 }

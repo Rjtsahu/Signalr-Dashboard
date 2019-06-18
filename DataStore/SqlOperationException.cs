@@ -13,7 +13,7 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
 
         public override string ToString()
         {
-            return $"{_exceptionString}  {base.ToString()} | Inner Exception : {InnerException?.StackTrace}";
+            return $"{_exceptionString}  {base.ToString()} | Trace : {StackTrace} | Inner Exception : {InnerException?.StackTrace}";
         }
     }
 }

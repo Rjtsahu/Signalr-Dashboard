@@ -1,7 +1,7 @@
 --  sqlite schema for middleware
 PRAGMA foreign_keys = ON;
 
-CREATE TABLE Session
+CREATE TABLE IF NOT EXISTS Session
 (
 	SessionId INTEGER PRIMARY KEY AUTOINCREMENT, 
 	ConnectionToken TEXT,
@@ -9,9 +9,9 @@ CREATE TABLE Session
 	IsCompleted INTEGER DEFAULT 0,
 	StartTimeStamp DATETIME DEFAULT CURRENT_TIMESTAMP,
 	FinishTimeStamp DATETIME DEFAULT CURRENT_TIMESTAMP
-)
+);
 
-CREATE TABLE SessionReport
+CREATE TABLE IF NOT EXISTS SessionReport
 (
 	SessionReportId INTEGER PRIMARY KEY AUTOINCREMENT,
 	SessionId INTEGER,
@@ -23,9 +23,9 @@ CREATE TABLE SessionReport
 	TotalConnectionTime DATETIME DEFAULT 0,
 	NegotiationData TEXT,
 	FOREIGN KEY(SessionId) REFERENCES Session(SessionId)
-)
+);
 
-CREATE TABLE Request
+CREATE TABLE IF NOT EXISTS Request
 (
 	RequestId INTEGER PRIMARY KEY AUTOINCREMENT,
 	SessionId INTEGER NULL,
@@ -47,9 +47,9 @@ CREATE TABLE Request
 	IsWebSocketRequest INTEGER DEFAULT 0,
 	RequestType TEXT NULL, -- type of request : /send , /connect , /start , /negotiate , /abort , /reconnect
 	FOREIGN KEY(SessionId) REFERENCES Session(SessionId)
-)
+);
 
-CREATE TABLE HubData
+CREATE TABLE IF NOT EXISTS HubData
 (
 	Id INTEGER PRIMARY KEY AUTOINCREMENT,
 	RequestId INTEGER,
@@ -59,5 +59,4 @@ CREATE TABLE HubData
 	ReturnData TEXT,
 	ExceptionData TEXT,
 	FOREIGN KEY(RequestId) REFERENCES Request(RequestId)
-
-)
+);
