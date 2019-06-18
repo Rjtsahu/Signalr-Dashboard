@@ -30,5 +30,17 @@ namespace Sahurjt.Signalr.Dashboard.DataStore.Dto
             }
             return csvString.Split(',').ToList();
         }
+
+        public static IEnumerable<TEntity> GetAll<TEntity>(this TEntity entity) where TEntity : IDataTableObject
+        {
+            var enumName = $"GetAll_{entity.TableName}";
+            if (Enum.TryParse<SelectSqlQuery>(enumName, out var queryEnum)){
+                ISqlOperation dep = new SqliteOperation("Data Source=C:\\db\\sample.db;Version=3;New=True;"); // use DependencyResolver here
+
+               return dep.SelectMultiple<TEntity>(queryEnum);
+            }
+
+            throw new NotImplementedException($"No SelectSqlQuery enum found for table name: {entity.TableName} , enum name: {enumName} .");
+        }
     }
 }

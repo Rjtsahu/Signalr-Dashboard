@@ -104,14 +104,18 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
 	                FOREIGN KEY(RequestId) REFERENCES Request(RequestId)
                 );
         ";
+
         private const string _insertIntoRequestQuery = @"INSERT INTO Request ( SessionId, RequestUrl, RemoteIp, RemotePort, ServerIp, ServerPort, RequestContentType, RequestBody, Protocol, 
                                                       QueryString, User, RequestTimeStamp, ResponseTimeStamp, RequestLatency, StatusCode, ResponseBody, IsWebSocketRequest, RequestType) 
                                                       VALUES (@SessionId, @RequestUrl, @RemoteIp, @RemotePort, @ServerIp, @ServerPort, @RequestContentType, @RequestBody, @Protocol, @QueryString, @User,
                                                       @RequestTimeStamp, @ResponseTimeStamp, @RequestLatency, @StatusCode, @ResponseBody, @IsWebSocketRequest, @RequestType)";
+
         private const string _insertIntoSessionQuery = @" INSERT INTO Session ( ConnectionToken, ConnectionId, IsCompleted, StartTimeStamp, FinishTimeStamp )
                                                         VALUES ( @ConnectionToken, @ConnectionId, @IsCompleted, @StartTimeStamp, @FinishTimeStamp )";
+
         private const string _insertIntoSessionReportQuery = @" INSERT INTO SessionReport (SessionId, IsStarted, IsConnected, TotalRequestCount, FailedRequestCount, HubNames, TotalConnectionTime, NegotiationData)
                                                          VALUES  ( @SessionId, @IsStarted, @IsConnected, @TotalRequestCount, @FailedRequestCount, @HubNames, @TotalConnectionTime, @NegotiationData ) ";
+
         private const string _insertIntoHubDataQuery = @" INSERT INTO HubData (RequestId, HubName, MethodName, Arguments, ReturnData, ExceptionData )
                                                         VALUES ( @RequestId, @HubName, @MethodName, @Arguments, @ReturnData, @ExceptionData ) ";
     }

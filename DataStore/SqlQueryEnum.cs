@@ -1,5 +1,6 @@
 ﻿namespace Sahurjt.Signalr.Dashboard.DataStore
 {
+    // Use Prefix "GetAll_" for fetching all records from a table.
     internal enum SelectSqlQuery
     {
         GetAll_Request,
@@ -8,6 +9,7 @@
         GetAll_SessionReport
     }
 
+    // Use Prefix "InsertRow_" for inserting query for a table.
     internal enum ExecuteSqlQuery
     {
         Create_DatabaseTables,
