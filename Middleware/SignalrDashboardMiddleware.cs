@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.Owin;
 using Sahurjt.Signalr.Dashboard.Configuration;
+using Sahurjt.Signalr.Dashboard.Core;
 using Sahurjt.Signalr.Dashboard.DataStore;
 using Sahurjt.Signalr.Dashboard.DataStore.Dto;
 using Sahurjt.Signalr.Dashboard.Helpers;
@@ -36,7 +37,7 @@ namespace Sahurjt.Signalr.Dashboard.Middleware
 
             LogHelper.Log("exiting");
 
-            var s = new SqliteOperation("Data Source=C:\\db\\sample.db;Version=3;New=True;");
+            var s = DashboardGlobal.ServiceResolver.GetService<ISqlOperation>();
             s.Execute(ExecuteSqlQuery.Create_DatabaseTables);
             var d = new SessionDto();
             var res = d.GetAll();

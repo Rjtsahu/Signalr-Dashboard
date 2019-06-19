@@ -2,10 +2,12 @@
 
 namespace Sahurjt.Signalr.Dashboard.Core
 {
-    internal interface IServiceResolver
+    public interface IServiceResolver
     {
         TInterface GetService<TInterface>();
 
-        void Register(Type serviceType, Func<object> activator);
+        void Register<TInterface, TService>(Func<TService> activator) where TService : TInterface;
+
+        void Replace<TInterface, TService>(Func<TService> activator) where TService : TInterface;
     }
 }
