@@ -1,0 +1,14 @@
+﻿
+Is it good to use redis for datastore  as handling relations will be quite tough 
+(well we can still have some sort of interface so that we can add this feature in future.)
+
+Use some sort of task queueing so that next pipeline has not to wait for our library processing such as db save ...
+  
+Capture invalid path having /signalr
+
+  ------- Possible input options  ----------
+
+  1) start segment of signalR request default /signalr
+  2) database connection string or redis connection string else default store as sqlite3
+  3) start segment for dashboard
+  4) allow dashboard access in localhost only ? or use auth mechanism to allow external access

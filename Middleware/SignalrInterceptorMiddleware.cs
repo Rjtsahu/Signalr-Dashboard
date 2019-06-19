@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.Owin;
 using Sahurjt.Signalr.Dashboard.Configuration;
+using Sahurjt.Signalr.Dashboard.DataStore.Dto;
 using Sahurjt.Signalr.Dashboard.Helpers;
 
 namespace Sahurjt.Signalr.Dashboard.Middleware
@@ -32,8 +33,9 @@ namespace Sahurjt.Signalr.Dashboard.Middleware
             LogHelper.Log(" request url ", environment.Request.Path);
             await Next.Invoke(environment);
             LogHelper.Log($" request url  ", environment.Response.StatusCode);
-
+            
             LogHelper.Log("exiting");
+
         }
     }
 }
