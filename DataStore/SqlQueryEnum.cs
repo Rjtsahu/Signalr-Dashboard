@@ -6,7 +6,11 @@
         GetAll_Request,
         GetAll_Session,
         GetAll_HubData,
-        GetAll_SessionReport
+        GetAll_SessionReport,
+        GetSingle_Request,
+        GetSingle_Session,
+        GetSingle_HubData,
+        GetSingle_SessionReport
     }
 
     // Use Prefix "InsertRow_" for inserting query for a table.

@@ -34,10 +34,24 @@ namespace Sahurjt.Signalr.Dashboard.DataStore.Dto
         public static IEnumerable<TEntity> GetAll<TEntity>(this TEntity entity) where TEntity : IDataTableObject
         {
             var enumName = $"GetAll_{entity.TableName}";
-            if (Enum.TryParse<SelectSqlQuery>(enumName, out var queryEnum)){
+            if (Enum.TryParse<SelectSqlQuery>(enumName, out var queryEnum))
+            {
                 ISqlOperation dep = new SqliteOperation("Data Source=C:\\db\\sample.db;Version=3;New=True;"); // use DependencyResolver here
 
-               return dep.SelectMultiple<TEntity>(queryEnum);
+                return dep.SelectMultiple<TEntity>(queryEnum);
+            }
+
+            throw new NotImplementedException($"No SelectSqlQuery enum found for table name: {entity.TableName} , enum name: {enumName} .");
+        }
+
+        public static TEntity GetSingle<TEntity>(this TEntity entity, int primaryId) where TEntity : IDataTableObject
+        {
+            var enumName = $"GetSingle_{entity.TableName}";
+            if (Enum.TryParse<SelectSqlQuery>(enumName, out var queryEnum))
+            {
+                ISqlOperation dep = new SqliteOperation("Data Source=C:\\db\\sample.db;Version=3;New=True;"); // use DependencyResolver here
+
+                return dep.Select<TEntity>(queryEnum, primaryId);
             }
 
             throw new NotImplementedException($"No SelectSqlQuery enum found for table name: {entity.TableName} , enum name: {enumName} .");

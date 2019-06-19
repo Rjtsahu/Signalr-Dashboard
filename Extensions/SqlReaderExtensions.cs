@@ -29,18 +29,18 @@ namespace Sahurjt.Signalr.Dashboard.Extensions
         private static T DbDataReaderToObject<T>(DbDataReader reader)
         {
             var obj = Activator.CreateInstance<T>();
-            var columns = Enumerable.Range(0, reader.FieldCount).Select(reader.GetName).Select(s => s.ToLower()).ToList();
-            var fields = obj.GetType().GetFields().Select(s => s.Name.ToLower()).ToList();
+            var columns = Enumerable.Range(0, reader.FieldCount).Select(reader.GetName).Select(s=>s.ToLower()).ToList();
+            var fields = typeof(T).GetProperties().Where(w=> columns.Contains(w.Name.ToLower()) ).ToList();
 
-            var commonFieldNames = columns.Concat(fields);
-
-            foreach (var fieldName in commonFieldNames)
+            foreach (var fieldInfo in fields)
             {
                 try
                 {
-                    obj.GetType().GetField(fieldName).SetValue(obj, reader[fieldName]);
+                    fieldInfo.SetValue(obj, Convert.ChangeType(reader[fieldInfo.Name],fieldInfo.PropertyType));
                 }
-                catch { }
+                catch(Exception e){
+
+                }
             }
 
             return obj;
