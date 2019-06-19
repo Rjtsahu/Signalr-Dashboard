@@ -38,9 +38,7 @@ namespace Sahurjt.Signalr.Dashboard.Extensions
                 {
                     fieldInfo.SetValue(obj, Convert.ChangeType(reader[fieldInfo.Name],fieldInfo.PropertyType));
                 }
-                catch(Exception e){
-
-                }
+                catch { }
             }
 
             return obj;
