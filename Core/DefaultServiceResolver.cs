@@ -8,8 +8,6 @@ namespace Sahurjt.Signalr.Dashboard.Core
     {
         private readonly Dictionary<Type, Func<object>> _resolver = new Dictionary<Type, Func<object>>();
 
-        private static readonly string _databaseConnectionString = "Data Source=C:\\db\\sample.db;Version=3;New=True;";
-
 
         public DefaultServiceResolver()
         {
@@ -20,7 +18,7 @@ namespace Sahurjt.Signalr.Dashboard.Core
         {
             Register<ISqlQueryProvider, SqliteQueryProvider>();
 
-            Register<ISqlOperation, SqliteOperation>(() => new SqliteOperation(_databaseConnectionString));
+            Register<ISqlOperation, SqliteOperation>(() => new SqliteOperation(DashboardGlobal.Configuration.ConnectionString));
         }
 
         public TInterface GetService<TInterface>()

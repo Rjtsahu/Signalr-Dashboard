@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.Owin;
 using Sahurjt.Signalr.Dashboard.Configuration;
-using Sahurjt.Signalr.Dashboard.DataStore.Dto;
+using Sahurjt.Signalr.Dashboard.Core;
 using Sahurjt.Signalr.Dashboard.Helpers;
 
 namespace Sahurjt.Signalr.Dashboard.Middleware
@@ -13,10 +13,10 @@ namespace Sahurjt.Signalr.Dashboard.Middleware
         private readonly string signalrUrlStartSegment;
         private readonly InterceptorConfiguration configuration;
 
-        public SignalrInterceptorMiddleware(OwinMiddleware next, string signalrUrl, InterceptorConfiguration config) : base(next)
+        public SignalrInterceptorMiddleware(OwinMiddleware next, string signalrUrl) : base(next)
         {
             signalrUrlStartSegment = signalrUrl;
-            configuration = config;
+            configuration = DashboardGlobal.Configuration;
         }
 
         /// <summary>

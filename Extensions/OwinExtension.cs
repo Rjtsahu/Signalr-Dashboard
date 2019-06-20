@@ -1,15 +1,14 @@
 ﻿using Owin;
 using Microsoft.Owin;
 using Sahurjt.Signalr.Dashboard.Middleware;
-using Sahurjt.Signalr.Dashboard.Configuration;
+using Sahurjt.Signalr.Dashboard.Core;
 
 namespace Sahurjt.Signalr.Dashboard.Extensions
 {
     public static class OwinExtension
     {
-        private static readonly string _defaultSignalrRoute = "/signalr";
-        private static readonly string _defaultDashboardRoute = "/dashboard";
-
+        private static readonly string _defaultSignalrRoute = DashboardGlobal.Configuration.DefaultSignalrRoute;
+        private static readonly string _defaultDashboardRoute = DashboardGlobal.Configuration.DefaultDashboardRoute;
 
 
         /// <summary>
@@ -23,11 +22,6 @@ namespace Sahurjt.Signalr.Dashboard.Extensions
             return UseSignalrDashboard(app, _defaultDashboardRoute);
         }
 
-        public static IAppBuilder UseSignalrDashboard(this IAppBuilder app, InterceptorConfiguration config)
-        {
-            return UseSignalrDashboard(app, _defaultDashboardRoute, _defaultSignalrRoute, config);
-        }
-
         public static IAppBuilder UseSignalrDashboard(this IAppBuilder app, string dashboardUrl)
         {
             return UseSignalrDashboard(app, dashboardUrl, _defaultSignalrRoute);
@@ -35,30 +29,23 @@ namespace Sahurjt.Signalr.Dashboard.Extensions
 
         public static IAppBuilder UseSignalrDashboard(this IAppBuilder app, string dashboardUrl, string signalrUrl)
         {
-            return UseSignalrDashboard(app, dashboardUrl, signalrUrl, new InterceptorConfiguration());
-        }
-
-        public static IAppBuilder UseSignalrDashboard(this IAppBuilder app, string dashboardUrl, string signalrUrl, InterceptorConfiguration config)
-        {
-            app.RunInterceptor(signalrUrl, config);
+            app.RunInterceptor(signalrUrl);
 
             app.MapWhen(p =>
             p.Request.Path.StartsWithSegments(PathString.FromUriComponent(dashboardUrl)),
-            subApp => subApp.RunDashboard(dashboardUrl, config));
+            subApp => subApp.RunDashboard(dashboardUrl));
 
             return app;
-
         }
 
-        private static IAppBuilder RunDashboard(this IAppBuilder app, string dashboardUrl, InterceptorConfiguration config)
+        private static IAppBuilder RunDashboard(this IAppBuilder app, string dashboardUrl)
         {
-            return app.Use<SignalrDashboardMiddleware>(dashboardUrl, config);
+            return app.Use<SignalrDashboardMiddleware>(dashboardUrl);
         }
 
-
-        private static IAppBuilder RunInterceptor(this IAppBuilder app, string signalrUrl, InterceptorConfiguration config)
+        private static IAppBuilder RunInterceptor(this IAppBuilder app, string signalrUrl)
         {
-            return app.Use<SignalrInterceptorMiddleware>(signalrUrl, config);
+            return app.Use<SignalrInterceptorMiddleware>(signalrUrl);
         }
 
     }
