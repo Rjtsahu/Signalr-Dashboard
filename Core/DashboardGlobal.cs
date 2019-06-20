@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sahurjt.Signalr.Dashboard.Configuration;
+using System;
 
 namespace Sahurjt.Signalr.Dashboard.Core
 {
@@ -10,5 +11,8 @@ namespace Sahurjt.Signalr.Dashboard.Core
         {
             get { return _serviceResolver.Value; }
         }
+
+        public static InterceptorConfiguration Configuration => new InterceptorConfiguration();
+
     }
 }

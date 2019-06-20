@@ -14,10 +14,10 @@ namespace Sahurjt.Signalr.Dashboard.Middleware
         private readonly string dashboardUrlStartSegment;
         private readonly InterceptorConfiguration configuration;
 
-        public SignalrDashboardMiddleware(OwinMiddleware next, string dashboardUrl, InterceptorConfiguration config) : base(next)
+        public SignalrDashboardMiddleware(OwinMiddleware next, string dashboardUrl) : base(next)
         {
             dashboardUrlStartSegment = dashboardUrl;
-            configuration = config;
+            configuration = DashboardGlobal.Configuration;
         }
 
         /// <summary>

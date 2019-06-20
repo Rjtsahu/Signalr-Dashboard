@@ -7,7 +7,7 @@ namespace Sahurjt.Signalr.Dashboard.Core
     internal class DefaultServiceResolver : IServiceResolver, IDisposable
     {
         private readonly Dictionary<Type, Func<object>> _resolver = new Dictionary<Type, Func<object>>();
-        private static readonly string _databaseConnectionString = "Data Source=C:\\db\\sample.db;Version=3;New=True;";
+
 
         public DefaultServiceResolver()
         {
@@ -16,7 +16,9 @@ namespace Sahurjt.Signalr.Dashboard.Core
 
         private void RegisterDefaultServices()
         {
-            Register<ISqlOperation, SqliteOperation>(() => new SqliteOperation(_databaseConnectionString));
+            Register<ISqlQueryProvider, SqliteQueryProvider>();
+
+            Register<ISqlOperation, SqliteOperation>(() => new SqliteOperation(DashboardGlobal.Configuration.ConnectionString));
         }
 
         public TInterface GetService<TInterface>()
@@ -29,6 +31,20 @@ namespace Sahurjt.Signalr.Dashboard.Core
             }
 
             return default(TInterface);
+        }
+
+        public void Register<TInterface, TService>() where TService : TInterface
+        {
+            if (!typeof(TInterface).IsInterface)
+            {
+                throw new ArgumentException("Service type must be an interface.");
+            }
+
+            if (_resolver.ContainsKey(typeof(TInterface)))
+            {
+                throw new Exception("The object intitalizer is already registered for this interface.");
+            }
+            _resolver.Add(typeof(TInterface), () => Activator.CreateInstance<TService>() as Func<object>);
         }
 
         public void Register<TInterface, TService>(Func<TService> activator) where TService : TInterface

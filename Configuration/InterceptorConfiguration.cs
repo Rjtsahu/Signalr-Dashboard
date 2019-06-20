@@ -4,14 +4,27 @@ namespace Sahurjt.Signalr.Dashboard.Configuration
 {
     public class InterceptorConfiguration
     {
-        private TimeSpan _FlushOldRecordAfter = TimeSpan.FromDays(3);
+        private readonly string _defaultSignalrRoute = "/signalr";
+
+        private static readonly string _defaultDashboardRoute = "/dashboard";
+
+        private static readonly string _databaseConnectionString = "Data Source=C:\\db\\sample.db;Version=3;New=True;";
 
 
-        public TimeSpan FlushOldRecordAfter { get { return _FlushOldRecordAfter; } set { _FlushOldRecordAfter = value; } }
+        public string DefaultSignalrRoute { get; internal set; }
 
-        public string ConnectionString { get; set; }
+        public string DefaultDashboardRoute { get; internal set; }
 
-        public bool UseSqlServerStorage { get; set; } = false;
-     
+        public TimeSpan FlushOldRecordAfter { get; set; }
+
+        public string ConnectionString { get; internal set; }
+
+        public InterceptorConfiguration()
+        {
+            FlushOldRecordAfter = TimeSpan.FromDays(3);
+            DefaultSignalrRoute = _defaultSignalrRoute;
+            DefaultDashboardRoute = _defaultDashboardRoute;
+            ConnectionString = _databaseConnectionString;
+        }
     }
 }
