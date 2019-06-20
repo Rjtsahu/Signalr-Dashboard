@@ -8,34 +8,26 @@ using Sahurjt.Signalr.Dashboard.Helpers;
 namespace Sahurjt.Signalr.Dashboard.Middleware
 {
 
-    internal class SignalrInterceptorMiddleware : OwinMiddleware
+    internal class SignalrInterceptorMiddleware : FilterMiddleware
     {
-        private readonly string signalrUrlStartSegment;
         private readonly InterceptorConfiguration configuration;
 
-        public SignalrInterceptorMiddleware(OwinMiddleware next, string signalrUrl) : base(next)
+        public SignalrInterceptorMiddleware(OwinMiddleware next, string signalrUrl) : base(next, signalrUrl)
         {
-            signalrUrlStartSegment = signalrUrl;
             configuration = DashboardGlobal.Configuration;
         }
 
-        /// <summary>
-        /// This is a middleware method will be invoked when a request is accepted in pipeline.
-        /// </summary>
-        /// <param name="environment">Environment detail for this pipelined request.</param>
-        /// <returns>async task for next middleware in pipeline</returns>
-        public override async Task Invoke(IOwinContext environment)
+        public override Task BeforeNextPipeline(IOwinContext owinContext)
         {
-            LogHelper.Log("entering");
-
-            LogHelper.Log(" signalrUrlStartSegment ", signalrUrlStartSegment);
-
-            LogHelper.Log(" request url ", environment.Request.Path);
-            await Next.Invoke(environment);
-            LogHelper.Log($" request url  ", environment.Response.StatusCode);
-            
-            LogHelper.Log("exiting");
-
+            LogHelper.Log("Entering BeforeNextPipeline ");
+            return Task.CompletedTask;
         }
+
+        public override Task AfterNextPipeline(IOwinContext owinContext, TimeSpan pipelineProcessingTime)
+        {
+            LogHelper.Log("Entering AfterNextPipeline timespan: " + pipelineProcessingTime);
+            return Task.CompletedTask;
+        }
+
     }
 }

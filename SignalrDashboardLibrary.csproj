@@ -91,6 +91,7 @@
     <Compile Include="Extensions\SqlReaderExtensions.cs" />
     <Compile Include="Helpers\HttpHelper.cs" />
     <Compile Include="Helpers\LogHelper.cs" />
+    <Compile Include="Middleware\FilterMiddleware.cs" />
     <Compile Include="Middleware\SignalrDashboardMiddleware.cs" />
     <Compile Include="Middleware\SignalrInterceptorMiddleware.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
