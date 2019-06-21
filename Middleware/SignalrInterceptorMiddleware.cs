@@ -19,13 +19,13 @@ namespace Sahurjt.Signalr.Dashboard.Middleware
 
         public override Task BeforeNextPipeline(IOwinContext owinContext)
         {
-            LogHelper.Log("Entering BeforeNextPipeline ");
+            LogHelper.Log("Entering BeforeNextPipeline ", owinContext.Get<string>(_environmentRequestId));
             return Task.CompletedTask;
         }
 
         public override Task AfterNextPipeline(IOwinContext owinContext, TimeSpan pipelineProcessingTime)
         {
-            LogHelper.Log("Entering AfterNextPipeline timespan: " + pipelineProcessingTime);
+            LogHelper.Log("Entering AfterNextPipeline timespan: " + pipelineProcessingTime, owinContext.Get<string>(_environmentRequestId));
             return Task.CompletedTask;
         }
 

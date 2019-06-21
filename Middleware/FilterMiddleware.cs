@@ -7,6 +7,7 @@ namespace Sahurjt.Signalr.Dashboard.Middleware
 
     internal abstract class FilterMiddleware : OwinMiddleware
     {
+        protected readonly string _environmentRequestId = "requestId";
         private readonly string _urlStartSegment;
 
         public FilterMiddleware(OwinMiddleware next, string urlStartSegment) : base(next)
@@ -21,6 +22,7 @@ namespace Sahurjt.Signalr.Dashboard.Middleware
         public override async Task Invoke(IOwinContext environment)
         {
             DateTime startTime = DateTime.UtcNow;
+            environment.Set(_environmentRequestId, Guid.NewGuid().ToString());
 
             if (ShouldRequestBeProcessed(environment.Request))
             {
