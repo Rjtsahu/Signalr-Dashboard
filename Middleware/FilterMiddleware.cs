@@ -23,7 +23,7 @@ namespace Sahurjt.Signalr.Dashboard.Middleware
         {
             DateTime startTime = DateTime.UtcNow;
             environment.Set(_environmentRequestId, Guid.NewGuid().ToString());
-
+            
             if (ShouldRequestBeProcessed(environment.Request))
             {
                 await BeforeNextPipeline(environment);

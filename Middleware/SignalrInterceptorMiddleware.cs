@@ -12,6 +12,8 @@ namespace Sahurjt.Signalr.Dashboard.Middleware
     {
         private readonly InterceptorConfiguration configuration;
 
+
+
         public SignalrInterceptorMiddleware(OwinMiddleware next, string signalrUrl) : base(next, signalrUrl)
         {
             configuration = DashboardGlobal.Configuration;
@@ -20,6 +22,9 @@ namespace Sahurjt.Signalr.Dashboard.Middleware
         public override Task BeforeNextPipeline(IOwinContext owinContext)
         {
             LogHelper.Log("Entering BeforeNextPipeline ", owinContext.Get<string>(_environmentRequestId));
+            var obj = new SignalrRequest(owinContext);
+            LogHelper.Log("obj GetRequestType: ", obj.Type);
+
             return Task.CompletedTask;
         }
 
