@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Microsoft.Owin;
 using Sahurjt.Signalr.Dashboard.Configuration;
 using Sahurjt.Signalr.Dashboard.Core;
-using Sahurjt.Signalr.Dashboard.Helpers;
 
 namespace Sahurjt.Signalr.Dashboard.Middleware
 {
@@ -21,16 +20,15 @@ namespace Sahurjt.Signalr.Dashboard.Middleware
 
         public override Task BeforeNextPipeline(IOwinContext owinContext)
         {
-            LogHelper.Log("Entering BeforeNextPipeline ", owinContext.Get<string>(_environmentRequestId));
-            var obj = new SignalrRequest(owinContext);
-            LogHelper.Log("obj GetRequestType: ", obj.Type);
+            new DefaultSignalrInterceptor(owinContext).InvokeRequestMethod();
 
             return Task.CompletedTask;
         }
 
         public override Task AfterNextPipeline(IOwinContext owinContext, TimeSpan pipelineProcessingTime)
         {
-            LogHelper.Log("Entering AfterNextPipeline timespan: " + pipelineProcessingTime, owinContext.Get<string>(_environmentRequestId));
+            new DefaultSignalrInterceptor(owinContext).InvokeRequestMethod(true);
+
             return Task.CompletedTask;
         }
 

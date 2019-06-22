@@ -1,4 +1,5 @@
 ﻿using Microsoft.Owin;
+using Sahurjt.Signalr.Dashboard.Extensions;
 using System;
 
 namespace Sahurjt.Signalr.Dashboard.Core
@@ -22,6 +23,7 @@ namespace Sahurjt.Signalr.Dashboard.Core
         private readonly IOwinContext _owinContext;
         private RequestType? _currentRequestType { get; set; }
 
+
         public RequestType Type
         {
             get
@@ -34,9 +36,12 @@ namespace Sahurjt.Signalr.Dashboard.Core
             }
         }
 
+        public readonly string OwinRequestId;
+
         public SignalrRequest(IOwinContext owinContext)
         {
             _owinContext = owinContext;
+            OwinRequestId = owinContext.GetRequestId();
         }
 
 
