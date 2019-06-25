@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Microsoft.Owin;
 using Sahurjt.Signalr.Dashboard.Configuration;
 using Sahurjt.Signalr.Dashboard.Core;
-using Sahurjt.Signalr.Dashboard.Helpers;
 
 namespace Sahurjt.Signalr.Dashboard.Middleware
 {
@@ -12,6 +11,8 @@ namespace Sahurjt.Signalr.Dashboard.Middleware
     {
         private readonly InterceptorConfiguration configuration;
 
+
+
         public SignalrInterceptorMiddleware(OwinMiddleware next, string signalrUrl) : base(next, signalrUrl)
         {
             configuration = DashboardGlobal.Configuration;
@@ -19,13 +20,15 @@ namespace Sahurjt.Signalr.Dashboard.Middleware
 
         public override Task BeforeNextPipeline(IOwinContext owinContext)
         {
-            LogHelper.Log("Entering BeforeNextPipeline ");
+            new DefaultSignalrInterceptor(owinContext).InvokeRequestMethod();
+
             return Task.CompletedTask;
         }
 
         public override Task AfterNextPipeline(IOwinContext owinContext, TimeSpan pipelineProcessingTime)
         {
-            LogHelper.Log("Entering AfterNextPipeline timespan: " + pipelineProcessingTime);
+            new DefaultSignalrInterceptor(owinContext).InvokeRequestMethod(true);
+
             return Task.CompletedTask;
         }
 

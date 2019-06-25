@@ -73,6 +73,9 @@
     <Compile Include="Core\DashboardGlobal.cs" />
     <Compile Include="Core\DefaultServiceResolver.cs" />
     <Compile Include="Core\IServiceResolver.cs" />
+    <Compile Include="Core\DefaultSignalrInterceptor.cs" />
+    <Compile Include="Core\SignalrInterceptorBase.cs" />
+    <Compile Include="Core\SignalrRequest.cs" />
     <Compile Include="DataStore\BaseSqlOperation.cs" />
     <Compile Include="DataStore\Dto\DtoExtensions.cs" />
     <Compile Include="DataStore\Dto\HubDataDto.cs" />
@@ -87,6 +90,7 @@
     <Compile Include="DataStore\SqlOperationException.cs" />
     <Compile Include="DataStore\SqlQueryEnum.cs" />
     <Compile Include="Extensions\OwinExtension.cs" />
+    <Compile Include="Extensions\ServiceResolverExtension.cs" />
     <Compile Include="Extensions\SqlParameterExtensions.cs" />
     <Compile Include="Extensions\SqlReaderExtensions.cs" />
     <Compile Include="Helpers\HttpHelper.cs" />

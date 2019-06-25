@@ -10,6 +10,7 @@ namespace Sahurjt.Signalr.Dashboard.Extensions
         private static readonly string _defaultSignalrRoute = DashboardGlobal.Configuration.DefaultSignalrRoute;
         private static readonly string _defaultDashboardRoute = DashboardGlobal.Configuration.DefaultDashboardRoute;
 
+        private static string _requestIdKey = "requestId";
 
         /// <summary>
         /// Extension method of IAppBuilder to expose this library to .Net code.
@@ -48,5 +49,14 @@ namespace Sahurjt.Signalr.Dashboard.Extensions
             return app.Use<SignalrInterceptorMiddleware>(signalrUrl);
         }
 
+        public static void SetRequestId(this IOwinContext owinContext, string requestId)
+        {
+            owinContext.Set<string>(_requestIdKey, requestId);
+        }
+
+        public static string GetRequestId(this IOwinContext owinContext)
+        {
+            return owinContext.Get<string>(_requestIdKey);
+        }
     }
 }

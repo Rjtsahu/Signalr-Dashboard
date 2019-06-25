@@ -1,4 +1,5 @@
 ﻿using Microsoft.Owin;
+using Sahurjt.Signalr.Dashboard.Extensions;
 using System;
 using System.Threading.Tasks;
 
@@ -21,6 +22,7 @@ namespace Sahurjt.Signalr.Dashboard.Middleware
         public override async Task Invoke(IOwinContext environment)
         {
             DateTime startTime = DateTime.UtcNow;
+            environment.SetRequestId(Guid.NewGuid().ToString());
 
             if (ShouldRequestBeProcessed(environment.Request))
             {
