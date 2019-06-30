@@ -1,4 +1,5 @@
 ﻿using Microsoft.Owin;
+using Sahurjt.Signalr.Dashboard.Configuration;
 using System;
 
 namespace Sahurjt.Signalr.Dashboard.Core
@@ -12,6 +13,8 @@ namespace Sahurjt.Signalr.Dashboard.Core
         protected TimeSpan PipelineProcessingTime { get; private set; }
 
         protected string ConnectionId { get; set; }
+
+        protected InterceptorConfiguration Configuration { get { return DashboardGlobal.Configuration; } }
 
         protected SignalrInterceptorBase(IOwinContext owinContext) : this(owinContext, TimeSpan.Zero) { }
 
