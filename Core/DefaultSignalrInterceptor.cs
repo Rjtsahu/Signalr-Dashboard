@@ -1,16 +1,16 @@
 ﻿using Microsoft.Owin;
 using Sahurjt.Signalr.Dashboard.Helpers;
+using System;
 
 namespace Sahurjt.Signalr.Dashboard.Core
 {
     internal class DefaultSignalrInterceptor : SignalrInterceptorBase
     {
-        public DefaultSignalrInterceptor(IOwinContext owinContext) : base(owinContext)
-        {
-        }
-        public DefaultSignalrInterceptor(IOwinContext owinContext, bool pipelineProcessed) : base(owinContext, pipelineProcessed)
-        {
-        }
+        
+        public DefaultSignalrInterceptor(IOwinContext owinContext) : base(owinContext) { }
+
+        public DefaultSignalrInterceptor(IOwinContext owinContext, TimeSpan pipelineProcessingTime) : base(owinContext, pipelineProcessingTime) { }
+
 
         public override void OnAbort()
         {

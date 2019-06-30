@@ -27,7 +27,7 @@ namespace Sahurjt.Signalr.Dashboard.Middleware
 
         public override Task AfterNextPipeline(IOwinContext owinContext, TimeSpan pipelineProcessingTime)
         {
-            new DefaultSignalrInterceptor(owinContext).InvokeRequestMethod(true);
+            new DefaultSignalrInterceptor(owinContext, pipelineProcessingTime).InvokeRequestMethod();
 
             return Task.CompletedTask;
         }
