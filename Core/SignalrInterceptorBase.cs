@@ -1,28 +1,34 @@
 ﻿using Microsoft.Owin;
+using Sahurjt.Signalr.Dashboard.Configuration;
+using System;
 
 namespace Sahurjt.Signalr.Dashboard.Core
 {
     internal abstract class SignalrInterceptorBase
     {
         protected readonly SignalrRequest SignalrRequest;
+
         protected bool PipelineProcessed { get; private set; }
+
+        protected TimeSpan PipelineProcessingTime { get; private set; }
 
         protected string ConnectionId { get; set; }
 
-        protected SignalrInterceptorBase(IOwinContext owinContext) : this(owinContext, false)
-        {
-        }
+        protected InterceptorConfiguration Configuration { get { return DashboardGlobal.Configuration; } }
 
-        protected SignalrInterceptorBase(IOwinContext owinContext, bool pipelineProcessed)
+        protected SignalrInterceptorBase(IOwinContext owinContext) : this(owinContext, TimeSpan.Zero) { }
+
+
+        protected SignalrInterceptorBase(IOwinContext owinContext, TimeSpan pipelineProcessingTime)
         {
 
             SignalrRequest = new SignalrRequest(owinContext);
-            PipelineProcessed = pipelineProcessed;
+            PipelineProcessingTime = pipelineProcessingTime;
+            PipelineProcessed = pipelineProcessingTime != TimeSpan.Zero;
         }
 
-        public void InvokeRequestMethod(bool pipelineProcessed = false)
+        public void InvokeRequestMethod()
         {
-            PipelineProcessed = pipelineProcessed;
             if (PipelineProcessed)
             {
                 OnPostRequest();

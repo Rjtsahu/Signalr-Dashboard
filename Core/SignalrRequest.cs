@@ -20,7 +20,7 @@ namespace Sahurjt.Signalr.Dashboard.Core
     internal class SignalrRequest
     {
 
-        private readonly IOwinContext _owinContext;
+        public readonly IOwinContext _owinContext;
         private RequestType? _currentRequestType { get; set; }
 
 
