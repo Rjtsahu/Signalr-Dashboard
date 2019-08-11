@@ -3,10 +3,7 @@
 namespace Sahurjt.Signalr.Dashboard.Core.Message
 {
     internal class NegotiateRequest : AbstractRequestQuery
-    {
-
-        public string Transport { get; set; }
-
+    {        
         public override RequestType RequestQueryType => RequestType.Negotiate;
 
         public NegotiateRequest(Uri requestUri) : base(requestUri) { }
