@@ -57,6 +57,6 @@ namespace Sahurjt.Signalr.Dashboard.Core
             return RequestType.None;
 
         }
-
+                
     }
 }
