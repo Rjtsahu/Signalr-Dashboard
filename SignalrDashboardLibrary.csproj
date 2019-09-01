@@ -78,6 +78,7 @@
     <Compile Include="Core\IDataTracing.cs" />
     <Compile Include="Core\Message\ConnectionDataParameter.cs" />
     <Compile Include="Core\Message\RequestQueryCollection.cs" />
+    <Compile Include="Core\Message\Response\NegotiateResponse.cs" />
     <Compile Include="Core\SignalrInterceptorBase.cs" />
     <Compile Include="Core\SignalrRequest.cs" />
     <Compile Include="DataStore\BaseSqlOperation.cs" />

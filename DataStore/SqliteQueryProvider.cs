@@ -51,7 +51,8 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
 	                ConnectionId TEXT,
 	                IsCompleted INTEGER DEFAULT 0,
 	                StartTimeStamp DATETIME DEFAULT CURRENT_TIMESTAMP,
-	                FinishTimeStamp DATETIME DEFAULT CURRENT_TIMESTAMP
+	                FinishTimeStamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+                    NegotiateData TEXT
                 );
 
                 CREATE TABLE IF NOT EXISTS SessionReport
@@ -111,8 +112,8 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
                                                       VALUES (@SessionId, @RequestUrl, @RemoteIp, @RemotePort, @ServerIp, @ServerPort, @RequestContentType, @RequestBody, @Protocol, @QueryString, @User,
                                                       @RequestTimeStamp, @ResponseTimeStamp, @RequestLatency, @StatusCode, @ResponseBody, @IsWebSocketRequest, @RequestType)";
 
-        private const string _insertIntoSessionQuery = @" INSERT INTO Session ( ConnectionToken, ConnectionId, IsCompleted, StartTimeStamp, FinishTimeStamp )
-                                                        VALUES ( @ConnectionToken, @ConnectionId, @IsCompleted, @StartTimeStamp, @FinishTimeStamp )";
+        private const string _insertIntoSessionQuery = @" INSERT INTO Session ( ConnectionId,ConnectionToken, IsCompleted, StartTimeStamp, FinishTimeStamp , NegotiateData)
+                                                        VALUES ( @ConnectionId,@ConnectionToken, @IsCompleted, @StartTimeStamp, @FinishTimeStamp , @NegotiateData)";
 
         private const string _insertIntoSessionReportQuery = @" INSERT INTO SessionReport (SessionId, IsStarted, IsConnected, TotalRequestCount, FailedRequestCount, HubNames, TotalConnectionTime, NegotiationData)
                                                          VALUES  ( @SessionId, @IsStarted, @IsConnected, @TotalRequestCount, @FailedRequestCount, @HubNames, @TotalConnectionTime, @NegotiationData ) ";
