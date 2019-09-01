@@ -6,7 +6,7 @@ namespace Sahurjt.Signalr.Dashboard.Core
 {
     internal abstract class SignalrInterceptorBase
     {
-        protected readonly SignalrRequest SignalrRequest;
+        protected readonly SignalrRequest CurrentRequest;
 
         protected bool PipelineProcessed { get; private set; }
 
@@ -22,7 +22,7 @@ namespace Sahurjt.Signalr.Dashboard.Core
         protected SignalrInterceptorBase(IOwinContext owinContext, TimeSpan pipelineProcessingTime)
         {
 
-            SignalrRequest = new SignalrRequest(owinContext);
+            CurrentRequest = new SignalrRequest(owinContext);
             PipelineProcessingTime = pipelineProcessingTime;
             PipelineProcessed = pipelineProcessingTime != TimeSpan.Zero;
         }
@@ -31,11 +31,14 @@ namespace Sahurjt.Signalr.Dashboard.Core
         {
             if (PipelineProcessed)
             {
+                if (CurrentRequest.Type == RequestType.Negotiate) {
+                    AfterNegotiate();
+                }
                 OnPostRequest();
                 return;
             }
 
-            var requestType = SignalrRequest.Type;
+            var requestType = CurrentRequest.Type;
             switch (requestType)
             {
                 case RequestType.Negotiate:
@@ -63,12 +66,14 @@ namespace Sahurjt.Signalr.Dashboard.Core
                     OnPing();
                     break;
             }
+            OnPreRequest();
         }
 
         public abstract void OnPreRequest();
         public abstract void OnPostRequest();
 
         public abstract void OnNegotiate();
+        public abstract void AfterNegotiate();
 
         public abstract void OnConnect();
         public abstract void OnStart();

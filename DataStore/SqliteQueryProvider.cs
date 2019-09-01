@@ -71,6 +71,7 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
                 CREATE TABLE IF NOT EXISTS Request
                 (
 	                RequestId INTEGER PRIMARY KEY AUTOINCREMENT,
+                    OwinRequestId TEXT UNIQUE NOT NULL,
 	                SessionId INTEGER NULL,
 	                RequestUrl TEXT,
 	                RemoteIp TEXT,
