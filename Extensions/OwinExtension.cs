@@ -2,6 +2,7 @@
 using Microsoft.Owin;
 using Sahurjt.Signalr.Dashboard.Middleware;
 using Sahurjt.Signalr.Dashboard.Core;
+using System.IO;
 
 namespace Sahurjt.Signalr.Dashboard.Extensions
 {
@@ -57,6 +58,24 @@ namespace Sahurjt.Signalr.Dashboard.Extensions
         internal static string GetRequestId(this IOwinContext owinContext)
         {
             return owinContext.Get<string>(_requestIdKey);
+        }
+
+        internal static string ReadBody(this IOwinRequest owinRequest)
+        {
+            if (owinRequest.Body.CanRead)
+            {
+                return new StreamReader(owinRequest.Body).ReadToEnd();
+            }
+            return null;
+        }
+
+        internal static string ReadBody(this IOwinResponse owinResponse)
+        {
+            if (owinResponse.Body.CanRead)
+            {
+                return new StreamReader(owinResponse.Body).ReadToEnd();
+            }
+            return null;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Owin;
 using Sahurjt.Signalr.Dashboard.Extensions;
 using System;
+using Sahurjt.Signalr.Dashboard.Core.Message;
 
 namespace Sahurjt.Signalr.Dashboard.Core
 {
@@ -20,9 +21,9 @@ namespace Sahurjt.Signalr.Dashboard.Core
     internal class SignalrRequest
     {
 
-        public readonly IOwinContext _owinContext;
+        public readonly IOwinContext OwinContext;
         private RequestType? _currentRequestType { get; set; }
-
+        public readonly RequestQueryCollection QueryCollection;
 
         public RequestType Type
         {
@@ -40,14 +41,15 @@ namespace Sahurjt.Signalr.Dashboard.Core
 
         public SignalrRequest(IOwinContext owinContext)
         {
-            _owinContext = owinContext;
+            OwinContext = owinContext;
             OwinRequestId = owinContext.GetRequestId();
+            QueryCollection = new RequestQueryCollection(OwinContext.Request.Uri);
         }
 
 
         private RequestType GetRequestType()
         {
-            var path = _owinContext.Request.Path;
+            var path = OwinContext.Request.Path;
             var lastSegment = path.Value.Substring(path.Value.LastIndexOf('/') + 1);
 
             if (Enum.TryParse<RequestType>(lastSegment ?? "", true, out var result))
@@ -57,6 +59,6 @@ namespace Sahurjt.Signalr.Dashboard.Core
             return RequestType.None;
 
         }
-                
+
     }
 }

@@ -1,5 +1,6 @@
 ﻿
-Is it good to use redis for datastore  as handling relations will be quite tough 
+Is it good to use redis for datastore  as handling relations will be quite tough. 
+
 (well we can still have some sort of interface so that we can add this feature in future.)
 
 Use some sort of task queueing so that next pipeline has not to wait for our library processing such as db save ...

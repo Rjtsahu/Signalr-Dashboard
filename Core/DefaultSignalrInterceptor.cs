@@ -44,7 +44,7 @@ namespace Sahurjt.Signalr.Dashboard.Core
         public override void OnPostRequest()
         {
             LogHelper.Log("OnPostRequest");
-            var n = new NegotiateRequest(this.SignalrRequest._owinContext.Request.Uri);
+           // this.SignalrRequest.OwinContext.Response
             
             //       _interceptorOperation.StartTracing();
         }

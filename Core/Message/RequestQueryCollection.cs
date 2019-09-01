@@ -6,21 +6,24 @@ using System.Web;
 
 namespace Sahurjt.Signalr.Dashboard.Core.Message
 {
-    internal abstract class AbstractRequestQuery
+    internal class RequestQueryCollection
     {
+
         public string ClientProtocol { get; set; }
 
         public string ConnectionData { get; set; }
+
+        public string Transport { get; set; }
+
+        public string ConnectionToken { get; set; }
 
         protected string QueryString { get; set; }
 
         protected Dictionary<string, string> QueryCollection { get; private set; }
 
-        public abstract RequestType RequestQueryType { get; }
-
         public List<ConnectionDataParameter> ConnectionDatas { get; private set; }
 
-        protected AbstractRequestQuery(Uri requestUri)
+        public RequestQueryCollection(Uri requestUri)
         {
             QueryString = requestUri.Query;
             ParseQueryCollection();
@@ -41,18 +44,17 @@ namespace Sahurjt.Signalr.Dashboard.Core.Message
             }
         }
 
-        protected abstract object GetObject();
 
         private void Decode()
         {
-            var fields = GetObject()?.GetType().GetProperties().ToList();
+            var fields = this.GetType().GetProperties().ToList();
             foreach (var fieldInfo in fields)
             {
                 try
                 {
                     if (QueryCollection.ContainsKey(fieldInfo.Name.ToLower()))
                     {
-                        fieldInfo.SetValue(GetObject(), Convert.ChangeType(QueryCollection[fieldInfo.Name.ToLower()], fieldInfo.PropertyType));
+                        fieldInfo.SetValue(this, Convert.ChangeType(QueryCollection[fieldInfo.Name.ToLower()], fieldInfo.PropertyType));
                     }
                 }
                 catch { }
