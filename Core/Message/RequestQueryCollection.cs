@@ -23,7 +23,7 @@ namespace Sahurjt.Signalr.Dashboard.Core.Message
 
         public List<ConnectionDataParameter> ConnectionDatas { get; private set; }
 
-        protected RequestQueryCollection(Uri requestUri)
+        public RequestQueryCollection(Uri requestUri)
         {
             QueryString = requestUri.Query;
             ParseQueryCollection();

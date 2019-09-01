@@ -75,13 +75,8 @@
     <Compile Include="Core\IServiceResolver.cs" />
     <Compile Include="Core\DefaultSignalrInterceptor.cs" />
     <Compile Include="Core\ISignalrInterceptorOperation.cs" />
-    <Compile Include="Core\Message\AbstractRequestQuery.cs" />
     <Compile Include="Core\Message\ConnectionDataParameter.cs" />
-    <Compile Include="Core\Message\ConnectRequest.cs" />
-    <Compile Include="Core\Message\NegotiateRequest.cs" />
-    <Compile Include="Core\Message\PollRequest.cs" />
     <Compile Include="Core\Message\RequestQueryCollection.cs" />
-    <Compile Include="Core\Message\StartRequest.cs" />
     <Compile Include="Core\SignalrInterceptorBase.cs" />
     <Compile Include="Core\SignalrRequest.cs" />
     <Compile Include="DataStore\BaseSqlOperation.cs" />
