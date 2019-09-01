@@ -23,27 +23,33 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
             _sqlQueryProvider = sqlQueryProvider;
         }
 
-        public virtual int Execute(ExecuteSqlQuery executeSql, params object[] parameters)
+        public int Execute(ExecuteSqlQuery executeSql, params object[] parameters)
         {
             return ExecuteNonQuery(_sqlQueryProvider.GetSql(executeSql), parameters);
         }
 
-        public virtual async Task<int> ExecuteAsync(ExecuteSqlQuery executeSql, params object[] parameters)
+        public async Task<int> ExecuteAsync(ExecuteSqlQuery executeSql, params object[] parameters)
         {
             return await Task.Run(() => (ExecuteNonQuery(_sqlQueryProvider.GetSql(executeSql), parameters)));
         }
 
 
-        public virtual T Select<T>(SelectSqlQuery selectSql, params object[] parameters)
+        public T Select<T>(SelectSqlQuery selectSql, params object[] parameters)
         {
             var sqlQuery = _sqlQueryProvider.GetSql(selectSql);
-            _dbCommand = AddSqlParameters(_dbCommand, sqlQuery, parameters);
+
+            return Select<T>(sqlQuery, parameters);
+        }
+
+        public T Select<T>(string selectRawSql, params object[] parameters)
+        {
+            _dbCommand = AddSqlParameters(_dbCommand, selectRawSql, parameters);
 
             try
             {
                 _dbCommand.Connection = _dbConnection;
                 _dbConnection.Open();
-                _dbCommand.CommandText = sqlQuery;
+                _dbCommand.CommandText = selectRawSql;
 
                 var reader = _dbCommand.ExecuteReader();
 
@@ -51,8 +57,8 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
             }
             catch (Exception e)
             {
-                LogHelper.Log("Error ",e.Message, e.StackTrace);
-                throw (SqlOperationException) e;
+                LogHelper.Log("Error ", e.Message, e.StackTrace);
+                throw (SqlOperationException)e;
             }
             finally
             {
@@ -60,15 +66,21 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
             }
         }
 
-        public virtual IList<T> SelectMultiple<T>(SelectSqlQuery selectSql, params object[] parameters)
+        public IList<T> SelectMultiple<T>(SelectSqlQuery selectSql, params object[] parameters)
         {
             var sqlQuery = _sqlQueryProvider.GetSql(selectSql);
-            _dbCommand = AddSqlParameters(_dbCommand, sqlQuery, parameters);
+
+            return SelectMultiple<T>(sqlQuery, parameters);
+        }
+
+        public IList<T> SelectMultiple<T>(string selectRawSql, params object[] parameters)
+        {
+            _dbCommand = AddSqlParameters(_dbCommand, selectRawSql, parameters);
 
             try
             {
                 _dbConnection.Open();
-                _dbCommand.CommandText = sqlQuery;
+                _dbCommand.CommandText = selectRawSql;
                 _dbCommand.Connection = _dbConnection;
 
                 var reader = _dbCommand.ExecuteReader();
@@ -78,14 +90,13 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
             catch (Exception e)
             {
                 LogHelper.Log("Error ", e.Message, e.StackTrace);
-                throw (SqlOperationException) e;
+                throw (SqlOperationException)e;
             }
             finally
             {
                 _dbConnection.Close();
             }
         }
-
 
         protected abstract DbCommand AddSqlParameters(DbCommand dbCommand, string sql, params object[] parameters);
 
