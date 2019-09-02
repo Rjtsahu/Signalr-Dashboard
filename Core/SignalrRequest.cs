@@ -24,6 +24,7 @@ namespace Sahurjt.Signalr.Dashboard.Core
         public readonly IOwinContext OwinContext;
         private RequestType? _currentRequestType { get; set; }
         public readonly RequestQueryCollection QueryCollection;
+        public string ResponseBody { get => OwinContext?.Get<string>("responseBody"); }
 
         public RequestType Type
         {

@@ -68,14 +68,6 @@ namespace Sahurjt.Signalr.Dashboard.Extensions
             }
             return null;
         }
-
-        internal static string ReadBody(this IOwinResponse owinResponse)
-        {
-            if (owinResponse.Body.CanRead)
-            {
-                return new StreamReader(owinResponse.Body).ReadToEnd();
-            }
-            return null;
-        }
+      
     }
 }

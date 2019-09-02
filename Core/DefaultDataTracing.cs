@@ -2,7 +2,6 @@
 using Sahurjt.Signalr.Dashboard.Core.Message.Response;
 using Sahurjt.Signalr.Dashboard.DataStore;
 using Sahurjt.Signalr.Dashboard.DataStore.Dto;
-using Sahurjt.Signalr.Dashboard.Extensions;
 using System;
 
 namespace Sahurjt.Signalr.Dashboard.Core
@@ -36,13 +35,16 @@ namespace Sahurjt.Signalr.Dashboard.Core
         public void StartSession(SignalrRequest signalrRequest)
         {
             /// starts session for a particular browser client
-            var jsonData = signalrRequest.OwinContext.Response.ReadBody();
+            var jsonData = signalrRequest.ResponseBody;
+
+            if (string.IsNullOrEmpty(jsonData)) return;
+
             var negotiateResponseObj = JsonConvert.DeserializeObject<NegotiateResponse>(jsonData);
 
             var sessionObj = new SessionDto
             {
                 ConnectionId = negotiateResponseObj.ConnectionId,
-                ConnectionToken = signalrRequest.QueryCollection.ConnectionToken,
+                ConnectionToken = negotiateResponseObj.ConnectionToken,
                 NegotiateData = jsonData,
                 StartTimeStamp = Convert.ToString(DateTime.UtcNow.Ticks)
             };

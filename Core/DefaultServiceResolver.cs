@@ -20,7 +20,7 @@ namespace Sahurjt.Signalr.Dashboard.Core
 
             Register<ISqlOperation, SqliteOperation>(() => new SqliteOperation(DashboardGlobal.Configuration.ConnectionString));
 
-            Register<IDataTracing, DefaultDataTracing>();
+            Register<IDataTracing, DefaultDataTracing>(()=> new DefaultDataTracing());
         }
 
         public TInterface GetService<TInterface>()
