@@ -30,6 +30,9 @@ namespace Sahurjt.Signalr.Dashboard.Core
         public void FinishSession(string connectionId)
         {
             /// TODO ; IMPL
+            var updateSql = $"UPDATE Session SET IsCompleted = @IsCompleted , " +
+                $"FinishTimeStamp = @FinishTimeStamp  WHERE ConnectionId = @ConnectionId ;";
+            
         }
 
         public void StartSession(SignalrRequest signalrRequest)

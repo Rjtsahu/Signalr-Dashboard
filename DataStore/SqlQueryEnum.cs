@@ -7,6 +7,7 @@
         GetAll_Session,
         GetAll_HubData,
         GetAll_SessionReport,
+
         GetSingle_Request,
         GetSingle_Session,
         GetSingle_HubData,
@@ -16,10 +17,59 @@
     // Use Prefix "InsertRow_" for inserting query for a table.
     internal enum ExecuteSqlQuery
     {
+        /// <summary>
+        /// Emum to create database schema, will be used on first runs.
+        /// </summary>
         Create_DatabaseTables,
+
+        /// <summary>
+        /// Insert record into Request table.
+        /// See : <see cref="Dto.RequestDto"/>
+        /// <para>
+        /// Must have paramters as following : 
+        ///  SessionId, RequestUrl, RemoteIp, RemotePort, ServerIp, ServerPort, RequestContentType, RequestBody, Protocol, 
+        ///  QueryString, User, RequestTimeStamp, ResponseTimeStamp, RequestLatency, StatusCode, ResponseBody, IsWebSocketRequest, RequestType
+        /// </para>
+        /// </summary>
         InsertRow_Request,
+
+        /// <summary>
+        /// Insert record into Session table.
+        /// See : <see cref="Dto.SessionDto"/>
+        /// <para>
+        /// Must have paramters as following : 
+        /// ConnectionId,ConnectionToken, IsCompleted, StartTimeStamp, FinishTimeStamp , NegotiateData
+        /// </para>
+        /// </summary>
         InsertRow_Session,
+
+        /// <summary>
+        /// Insert record into HubData table.
+        /// See : <see cref="Dto.HubDataDto"/>
+        /// <para>
+        /// Must have paramters as following : 
+        /// RequestId, HubName, MethodName, Arguments, ReturnData, ExceptionData
+        /// </para>
+        /// </summary>
         InsertRow_HubData,
-        InsertRow_SessionReport
+
+        /// <summary>
+        /// Insert record into SessionReport table.
+        /// See : <see cref="Dto.SessionReportDto"/>
+        /// <para>
+        /// Must have paramters as following : 
+        /// SessionId, IsStarted, IsConnected, TotalRequestCount, FailedRequestCount, HubNames, TotalConnectionTime, NegotiationData
+        /// </para>
+        /// </summary>
+        InsertRow_SessionReport,
+
+        /// <summary>
+        /// Enum used to update record of Session table when a client completes its session.
+        /// <para>
+        /// Order of parameters : 
+        /// IsCompleted , FinishTimeStamp | ConnectionId (for selection)
+        /// </para>
+        /// </summary>
+        Update_SessionOnCompleted
     }
 }

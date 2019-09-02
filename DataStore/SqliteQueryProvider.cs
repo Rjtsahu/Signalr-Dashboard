@@ -13,6 +13,7 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
             { ExecuteSqlQuery.InsertRow_Session,_insertIntoSessionQuery},
             { ExecuteSqlQuery.InsertRow_SessionReport,_insertIntoSessionReportQuery},
             { ExecuteSqlQuery.InsertRow_HubData,_insertIntoHubDataQuery},
+            { ExecuteSqlQuery.Update_SessionOnCompleted,_updateSessionWhenCompletedQuery},
         };
 
         public IDictionary<SelectSqlQuery, string> SelectSqls => new Dictionary<SelectSqlQuery, string> {
@@ -40,6 +41,11 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
             throw new KeyNotFoundException($" {DatabaseProviderName} doesn't provide select sql query for enum: {selectSqlEnum.ToString()}");
         }
 
+        #region DDL Queries
+
+        /// <summary>
+        /// Create database schema query
+        /// </summary>
         private const string _createTableQuery = @"
                 --  sqlite schema for middleware
                 PRAGMA foreign_keys = ON;
@@ -106,6 +112,9 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
 	                FOREIGN KEY(RequestId) REFERENCES Request(RequestId)
                 );
         ";
+        #endregion
+
+        #region Insert queries
 
         private const string _insertIntoRequestQuery = @"INSERT INTO Request ( SessionId, RequestUrl, RemoteIp, RemotePort, ServerIp, ServerPort, RequestContentType, RequestBody, Protocol, 
                                                       QueryString, User, RequestTimeStamp, ResponseTimeStamp, RequestLatency, StatusCode, ResponseBody, IsWebSocketRequest, RequestType) 
@@ -120,5 +129,12 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
 
         private const string _insertIntoHubDataQuery = @" INSERT INTO HubData (RequestId, HubName, MethodName, Arguments, ReturnData, ExceptionData )
                                                         VALUES ( @RequestId, @HubName, @MethodName, @Arguments, @ReturnData, @ExceptionData ) ";
+        #endregion
+
+        #region Update Queries
+
+        private const string _updateSessionWhenCompletedQuery = @"UPDATE Session SET IsCompleted = @IsCompleted , 
+                                                                       FinishTimeStamp = @FinishTimeStamp  WHERE ConnectionId = @ConnectionId ;";
+        #endregion
     }
 }

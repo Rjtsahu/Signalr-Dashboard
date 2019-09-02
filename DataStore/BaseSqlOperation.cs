@@ -58,7 +58,7 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
             catch (Exception e)
             {
                 LogHelper.Log("Error ", e.Message, e.StackTrace);
-                throw (SqlOperationException)e;
+                throw new SqlOperationException(e.Message,e);
             }
             finally
             {
@@ -90,7 +90,7 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
             catch (Exception e)
             {
                 LogHelper.Log("Error ", e.Message, e.StackTrace);
-                throw (SqlOperationException)e;
+                throw new SqlOperationException(e.Message, e);
             }
             finally
             {
@@ -115,7 +115,7 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
             catch (Exception e)
             {
                 LogHelper.Log("Error ", e.Message, e.StackTrace);
-                throw (SqlOperationException)e;
+                throw new SqlOperationException(e.Message, e);
             }
             finally
             {
