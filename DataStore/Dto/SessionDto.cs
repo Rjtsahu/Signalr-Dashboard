@@ -8,6 +8,7 @@
         public bool IsCompleted { get; set; }
         public string StartTimeStamp { get; set; }
         public string FinishTimeStamp { get; set; }
+        public string NegotiateData { get; set; }
 
         public string TableName => "Session";
 

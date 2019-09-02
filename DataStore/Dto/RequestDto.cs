@@ -3,6 +3,7 @@
     internal class RequestDto :IDataTableObject
     {
         public int RequestId { get; set; }
+        public string OwinRequestId { get; set; }
         public string SessionId { get; set; }
         public string RequestUrl { get; set; }
         public string RemoteIp { get; set; }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sahurjt.Signalr.Dashboard.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 namespace Sahurjt.Signalr.Dashboard.DataStore.Dto
@@ -36,7 +37,7 @@ namespace Sahurjt.Signalr.Dashboard.DataStore.Dto
             var enumName = $"GetAll_{entity.TableName}";
             if (Enum.TryParse<SelectSqlQuery>(enumName, out var queryEnum))
             {
-                ISqlOperation dep = new SqliteOperation("Data Source=C:\\db\\sample.db;Version=3;New=True;"); // use DependencyResolver here
+                ISqlOperation dep = DashboardGlobal.ServiceResolver.GetService<ISqlOperation>();
 
                 return dep.SelectMultiple<TEntity>(queryEnum);
             }
@@ -49,12 +50,13 @@ namespace Sahurjt.Signalr.Dashboard.DataStore.Dto
             var enumName = $"GetSingle_{entity.TableName}";
             if (Enum.TryParse<SelectSqlQuery>(enumName, out var queryEnum))
             {
-                ISqlOperation dep = new SqliteOperation("Data Source=C:\\db\\sample.db;Version=3;New=True;"); // use DependencyResolver here
+                ISqlOperation dep = DashboardGlobal.ServiceResolver.GetService<ISqlOperation>();
 
                 return dep.Select<TEntity>(queryEnum, primaryId);
             }
 
             throw new NotImplementedException($"No SelectSqlQuery enum found for table name: {entity.TableName} , enum name: {enumName} .");
         }
+
     }
 }

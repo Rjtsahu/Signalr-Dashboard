@@ -1,5 +1,4 @@
 ﻿using Microsoft.Owin;
-using Sahurjt.Signalr.Dashboard.Core.Message;
 using Sahurjt.Signalr.Dashboard.Helpers;
 using System;
 
@@ -7,16 +6,22 @@ namespace Sahurjt.Signalr.Dashboard.Core
 {
     internal class DefaultSignalrInterceptor : SignalrInterceptorBase
     {
-        private readonly ISignalrInterceptorOperation _interceptorOperation;
+        private readonly IDataTracing _tracer;
 
-        public DefaultSignalrInterceptor(IOwinContext owinContext) : base(owinContext) { }
+        public DefaultSignalrInterceptor(IOwinContext owinContext) : base(owinContext) {
+            _tracer = DashboardGlobal.ServiceResolver.GetService<IDataTracing>();
+        }
 
-        public DefaultSignalrInterceptor(IOwinContext owinContext, TimeSpan pipelineProcessingTime) : base(owinContext, pipelineProcessingTime) { }
+        public DefaultSignalrInterceptor(IOwinContext owinContext, TimeSpan pipelineProcessingTime) : base(owinContext, pipelineProcessingTime) {
+            _tracer = DashboardGlobal.ServiceResolver.GetService<IDataTracing>();
+        }
 
 
         public override void OnAbort()
         {
             LogHelper.Log("OnAbort");
+
+            _tracer.FinishSession(CurrentRequest.QueryCollection.ConnectionToken);
         }
 
         public override void OnConnect()
@@ -27,8 +32,14 @@ namespace Sahurjt.Signalr.Dashboard.Core
         public override void OnNegotiate()
         {
             LogHelper.Log("OnNegotiate");
-
         }
+
+        public override void AfterNegotiate()
+        {
+            LogHelper.Log("AfterNegotiate");
+            _tracer.StartSession(CurrentRequest);
+        }
+
 
         public override void OnPing()
         {
@@ -39,20 +50,6 @@ namespace Sahurjt.Signalr.Dashboard.Core
         public override void OnPool()
         {
             LogHelper.Log("OnPool");
-        }
-
-        public override void OnPostRequest()
-        {
-            LogHelper.Log("OnPostRequest");
-           // this.SignalrRequest.OwinContext.Response
-            
-            //       _interceptorOperation.StartTracing();
-        }
-
-        public override void OnPreRequest()
-        {
-            LogHelper.Log("OnPreRequest");
-            //     _interceptorOperation.StartTracing();
         }
 
         public override void OnReconnect()
@@ -70,7 +67,18 @@ namespace Sahurjt.Signalr.Dashboard.Core
         public override void OnStart()
         {
             LogHelper.Log("OnStart");
+        }
 
+        public override void OnPostRequest()
+        {
+            LogHelper.Log("OnPostRequest");
+            _tracer.CompleteRequestTrace(CurrentRequest.OwinRequestId, CurrentRequest);
+        }
+
+        public override void OnPreRequest()
+        {
+            LogHelper.Log("OnPreRequest");
+            _tracer.AddRequestTrace(CurrentRequest.OwinRequestId, CurrentRequest);
         }
     }
 }

@@ -19,6 +19,8 @@ namespace Sahurjt.Signalr.Dashboard.Core
             Register<ISqlQueryProvider, SqliteQueryProvider>();
 
             Register<ISqlOperation, SqliteOperation>(() => new SqliteOperation(DashboardGlobal.Configuration.ConnectionString));
+
+            Register<IDataTracing, DefaultDataTracing>(()=> new DefaultDataTracing());
         }
 
         public TInterface GetService<TInterface>()

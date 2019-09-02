@@ -11,5 +11,8 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
         int Execute(ExecuteSqlQuery executeSql, params object[] parameters);
         Task<int> ExecuteAsync(ExecuteSqlQuery executeSql, params object[] parameters);
 
+        T Select<T>(string selectRawSql, params object[] parameters);
+        IList<T> SelectMultiple<T>(string selectRawSql, params object[] parameters);
+
     }
 }

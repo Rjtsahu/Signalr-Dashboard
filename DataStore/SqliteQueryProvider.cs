@@ -13,6 +13,7 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
             { ExecuteSqlQuery.InsertRow_Session,_insertIntoSessionQuery},
             { ExecuteSqlQuery.InsertRow_SessionReport,_insertIntoSessionReportQuery},
             { ExecuteSqlQuery.InsertRow_HubData,_insertIntoHubDataQuery},
+            { ExecuteSqlQuery.Update_SessionOnCompleted,_updateSessionWhenCompletedQuery},
         };
 
         public IDictionary<SelectSqlQuery, string> SelectSqls => new Dictionary<SelectSqlQuery, string> {
@@ -40,6 +41,11 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
             throw new KeyNotFoundException($" {DatabaseProviderName} doesn't provide select sql query for enum: {selectSqlEnum.ToString()}");
         }
 
+        #region DDL Queries
+
+        /// <summary>
+        /// Create database schema query
+        /// </summary>
         private const string _createTableQuery = @"
                 --  sqlite schema for middleware
                 PRAGMA foreign_keys = ON;
@@ -51,7 +57,8 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
 	                ConnectionId TEXT,
 	                IsCompleted INTEGER DEFAULT 0,
 	                StartTimeStamp DATETIME DEFAULT CURRENT_TIMESTAMP,
-	                FinishTimeStamp DATETIME DEFAULT CURRENT_TIMESTAMP
+	                FinishTimeStamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+                    NegotiateData TEXT
                 );
 
                 CREATE TABLE IF NOT EXISTS SessionReport
@@ -71,6 +78,7 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
                 CREATE TABLE IF NOT EXISTS Request
                 (
 	                RequestId INTEGER PRIMARY KEY AUTOINCREMENT,
+                    OwinRequestId TEXT UNIQUE NOT NULL,
 	                SessionId INTEGER NULL,
 	                RequestUrl TEXT,
 	                RemoteIp TEXT,
@@ -104,19 +112,29 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
 	                FOREIGN KEY(RequestId) REFERENCES Request(RequestId)
                 );
         ";
+        #endregion
+
+        #region Insert queries
 
         private const string _insertIntoRequestQuery = @"INSERT INTO Request ( SessionId, RequestUrl, RemoteIp, RemotePort, ServerIp, ServerPort, RequestContentType, RequestBody, Protocol, 
                                                       QueryString, User, RequestTimeStamp, ResponseTimeStamp, RequestLatency, StatusCode, ResponseBody, IsWebSocketRequest, RequestType) 
                                                       VALUES (@SessionId, @RequestUrl, @RemoteIp, @RemotePort, @ServerIp, @ServerPort, @RequestContentType, @RequestBody, @Protocol, @QueryString, @User,
                                                       @RequestTimeStamp, @ResponseTimeStamp, @RequestLatency, @StatusCode, @ResponseBody, @IsWebSocketRequest, @RequestType)";
 
-        private const string _insertIntoSessionQuery = @" INSERT INTO Session ( ConnectionToken, ConnectionId, IsCompleted, StartTimeStamp, FinishTimeStamp )
-                                                        VALUES ( @ConnectionToken, @ConnectionId, @IsCompleted, @StartTimeStamp, @FinishTimeStamp )";
+        private const string _insertIntoSessionQuery = @" INSERT INTO Session ( ConnectionId,ConnectionToken, IsCompleted, StartTimeStamp, FinishTimeStamp , NegotiateData)
+                                                        VALUES ( @ConnectionId,@ConnectionToken, @IsCompleted, @StartTimeStamp, @FinishTimeStamp , @NegotiateData)";
 
         private const string _insertIntoSessionReportQuery = @" INSERT INTO SessionReport (SessionId, IsStarted, IsConnected, TotalRequestCount, FailedRequestCount, HubNames, TotalConnectionTime, NegotiationData)
                                                          VALUES  ( @SessionId, @IsStarted, @IsConnected, @TotalRequestCount, @FailedRequestCount, @HubNames, @TotalConnectionTime, @NegotiationData ) ";
 
         private const string _insertIntoHubDataQuery = @" INSERT INTO HubData (RequestId, HubName, MethodName, Arguments, ReturnData, ExceptionData )
                                                         VALUES ( @RequestId, @HubName, @MethodName, @Arguments, @ReturnData, @ExceptionData ) ";
+        #endregion
+
+        #region Update Queries
+
+        private const string _updateSessionWhenCompletedQuery = @"UPDATE Session SET IsCompleted = @IsCompleted , 
+                                                                       FinishTimeStamp = @FinishTimeStamp  WHERE ConnectionId = @ConnectionId ;";
+        #endregion
     }
 }
