@@ -12,7 +12,8 @@ namespace Sahurjt.Signalr.Dashboard.Extensions
             var paramsInSql = Regex.Matches(sql, "@[a-zA-Z0-9_]*")?.Cast<Match>()?.Select(match => match.Value).ToList();
             if (parameters == null || paramsInSql.Count != parameters.Length)
             {
-                throw new ArgumentException($"No of argument in sql({paramsInSql.Count}) doesn't match with arguments in parameter list ({parameters?.Length}).");
+                throw new ArgumentException($"No of argument in sql({paramsInSql.Count}) doesn't match with arguments in parameter list ({parameters?.Length})." +
+                    $" Require parameters : {string.Join(" , ", paramsInSql)}");
             }
 
             for (int i = 0; i < paramsInSql.Count; i++)
