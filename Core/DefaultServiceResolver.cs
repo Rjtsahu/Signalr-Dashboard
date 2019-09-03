@@ -4,12 +4,9 @@ using System.Collections.Generic;
 
 namespace Sahurjt.Signalr.Dashboard.Core
 {
-    /// <summary>
-    /// Service resolver having singleton instances of dependecies.
-    /// </summary>
     internal class DefaultServiceResolver : IServiceResolver, IDisposable
     {
-        private readonly Dictionary<Type, object> _resolver = new Dictionary<Type, object>();
+        private readonly Dictionary<Type, Func<object>> _resolver = new Dictionary<Type, Func<object>>();
 
 
         public DefaultServiceResolver()
@@ -23,13 +20,15 @@ namespace Sahurjt.Signalr.Dashboard.Core
 
             Register<ISqlOperation, SqliteOperation>(() => new SqliteOperation(DashboardGlobal.Configuration.ConnectionString));
 
-            Register<IDataTracing, DefaultDataTracing>(()=> new DefaultDataTracing(GetService<ISqlOperation>()));
+            Register<IDataTracing, DefaultDataTracing>(() => new DefaultDataTracing(GetService<ISqlOperation>()));
         }
 
         public TInterface GetService<TInterface>()
         {
-            if (_resolver.TryGetValue(typeof(TInterface), out var obj))
+            if (_resolver.TryGetValue(typeof(TInterface), out var activator))
             {
+
+                var obj = activator();
                 return (TInterface)obj;
             }
 
@@ -47,7 +46,7 @@ namespace Sahurjt.Signalr.Dashboard.Core
             {
                 throw new Exception("The object intitalizer is already registered for this interface.");
             }
-            _resolver.Add(typeof(TInterface), Activator.CreateInstance<TService>());
+            _resolver.Add(typeof(TInterface), () => Activator.CreateInstance<TService>() as Func<object>);
         }
 
         public void Register<TInterface, TService>(Func<TService> activator) where TService : TInterface
@@ -62,7 +61,7 @@ namespace Sahurjt.Signalr.Dashboard.Core
                 throw new Exception("The object intitalizer is already registered for this interface.");
             }
 
-            _resolver.Add(typeof(TInterface), activator());
+            _resolver.Add(typeof(TInterface), activator as Func<object>);
         }
 
         public void Replace<TInterface, TService>(Func<TService> activator) where TService : TInterface
@@ -78,7 +77,7 @@ namespace Sahurjt.Signalr.Dashboard.Core
             }
 
             _resolver.Remove(typeof(TInterface));
-            _resolver.Add(typeof(TInterface), activator());
+            _resolver.Add(typeof(TInterface), activator as Func<object>);
         }
 
         public void Dispose()

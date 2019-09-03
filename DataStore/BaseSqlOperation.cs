@@ -12,14 +12,10 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
     {
         protected abstract string ProviderName { get; }
 
-        private readonly DbConnection _dbConnection;
-        private DbCommand _dbCommand;
         private readonly ISqlQueryProvider _sqlQueryProvider;
 
-        public BaseSqlOperation(DbConnection dbConnection, DbCommand dbCommand, ISqlQueryProvider sqlQueryProvider)
+        public BaseSqlOperation(ISqlQueryProvider sqlQueryProvider)
         {
-            _dbConnection = dbConnection;
-            _dbCommand = dbCommand;
             _sqlQueryProvider = sqlQueryProvider;
         }
 
@@ -43,27 +39,37 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
 
         public T Select<T>(string selectRawSql, params object[] parameters)
         {
-            _dbCommand = AddSqlParameters(_dbCommand, selectRawSql, parameters);
-
-            try
+            using (var dbConnection = GetDbConnection())
             {
-                _dbCommand.Connection = _dbConnection;
-                _dbConnection.Open();
-                _dbCommand.CommandText = selectRawSql;
+                using (var dbCmd = GetCommandParameter(selectRawSql, parameters))
+                {
+                    try
+                    {
+                        dbCmd.Connection = dbConnection;
+                        dbCmd.CommandText = selectRawSql;
 
-                var reader = _dbCommand.ExecuteReader();
+                        dbConnection.Open();
 
-                return reader.ToObject<T>();
+                        var reader = dbCmd.ExecuteReader();
+
+                        var result = reader.ToObject<T>();
+
+                        reader.Close();
+                        return result;
+                    }
+                    catch (Exception e)
+                    {
+                        LogHelper.Log("Error ", e.Message, e.StackTrace);
+                        throw new SqlOperationException(e.Message, e);
+                    }
+                    finally
+                    {
+                        dbConnection.Close();
+                    }
+
+                }
             }
-            catch (Exception e)
-            {
-                LogHelper.Log("Error ", e.Message, e.StackTrace);
-                throw new SqlOperationException(e.Message,e);
-            }
-            finally
-            {
-                _dbConnection.Close();
-            }
+
         }
 
         public IList<T> SelectMultiple<T>(SelectSqlQuery selectSql, params object[] parameters)
@@ -75,51 +81,69 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
 
         public IList<T> SelectMultiple<T>(string selectRawSql, params object[] parameters)
         {
-            _dbCommand = AddSqlParameters(_dbCommand, selectRawSql, parameters);
-
-            try
+            using (var dbConnection = GetDbConnection())
             {
-                _dbConnection.Open();
-                _dbCommand.CommandText = selectRawSql;
-                _dbCommand.Connection = _dbConnection;
+                using (var dbCmd = GetCommandParameter(selectRawSql, parameters))
+                {
+                    try
+                    {
+                        dbCmd.Connection = dbConnection;
+                        dbCmd.CommandText = selectRawSql;
 
-                var reader = _dbCommand.ExecuteReader();
+                        dbConnection.Open();
 
-                return reader.ToList<T>();
-            }
-            catch (Exception e)
-            {
-                LogHelper.Log("Error ", e.Message, e.StackTrace);
-                throw new SqlOperationException(e.Message, e);
-            }
-            finally
-            {
-                _dbConnection.Close();
+                        var reader = dbCmd.ExecuteReader();
+
+                        var result = reader.ToList<T>();
+
+                        reader.Close();
+                        return result;
+                    }
+                    catch (Exception e)
+                    {
+                        LogHelper.Log("Error ", e.Message, e.StackTrace);
+                        throw new SqlOperationException(e.Message, e);
+                    }
+                    finally
+                    {
+                        dbConnection.Close();
+                    }
+
+                }
             }
         }
 
-        protected abstract DbCommand AddSqlParameters(DbCommand dbCommand, string sql, params object[] parameters);
+        protected abstract DbCommand GetCommandParameter(string sql, params object[] parameters);
+
+        protected abstract DbConnection GetDbConnection();
 
         private int ExecuteNonQuery(string sqlQuery, params object[] parameters)
         {
-            _dbCommand = AddSqlParameters(_dbCommand, sqlQuery, parameters);
-
             var result = -1;
-            try
+
+            using (var dbConnection = GetDbConnection())
             {
-                _dbConnection.Open();
-                _dbCommand.CommandText = sqlQuery;
-                _dbCommand.Connection = _dbConnection;
-                result = _dbCommand.ExecuteNonQuery();
-            }
-            catch (Exception e)
-            {
-                LogHelper.Log("Error ", e.Message, e.StackTrace);
-                throw new SqlOperationException(e.Message, e);
-            }
-            finally
-            {
-                _dbConnection.Close();
+                using (var dbCmd = GetCommandParameter(sqlQuery, parameters))
+                {
+                    try
+                    {
+                        dbCmd.Connection = dbConnection;
+                        dbCmd.CommandText = sqlQuery;
+
+                        dbConnection.Open();
+
+                        result = dbCmd.ExecuteNonQuery();
+                    }
+                    catch (Exception e)
+                    {
+                        LogHelper.Log("Error ", e.Message, e.StackTrace);
+                        throw new SqlOperationException(e.Message, e);
+                    }
+                    finally
+                    {
+                        dbConnection.Close();
+                    }
+                }
             }
             return result;
         }

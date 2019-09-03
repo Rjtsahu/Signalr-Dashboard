@@ -2,6 +2,7 @@
 using Sahurjt.Signalr.Dashboard.Core.Message.Response;
 using Sahurjt.Signalr.Dashboard.DataStore;
 using Sahurjt.Signalr.Dashboard.DataStore.Dto;
+using Sahurjt.Signalr.Dashboard.Extensions;
 using System;
 
 namespace Sahurjt.Signalr.Dashboard.Core
@@ -18,20 +19,44 @@ namespace Sahurjt.Signalr.Dashboard.Core
 
         public bool AddRequestTrace(string owinRequestId, SignalrRequest signalrRequest)
         {
-            /// TODO ; IMPL
-            return false;
+            var owinRequest = signalrRequest.OwinContext.Request;
+
+            var sessionObj = _sqlOperation.Select<SessionDto>(SelectSqlQuery.GetSingle_Session_By_ConnectionToken,
+                signalrRequest.QueryCollection.ConnectionToken);
+
+            if (sessionObj == null) return false;
+
+            var requestEntity = new RequestDto
+            {
+                SessionId = sessionObj.SessionId,
+                OwinRequestId = owinRequestId,
+                RequestUrl = owinRequest.Uri.AbsoluteUri,
+                RemoteIp = owinRequest.RemoteIpAddress,
+                RemotePort = owinRequest.RemotePort ?? 0,
+                ServerIp = owinRequest.LocalIpAddress,
+                ServerPort = owinRequest.LocalPort ?? 0,
+                RequestContentType = owinRequest.ContentType,
+                RequestBody = owinRequest.ReadBody(),
+                Protocol = owinRequest.Protocol,
+                QueryString = owinRequest.QueryString.Value,
+                User = owinRequest.User?.Identity?.Name,
+                RequestTimeStamp = DateTime.UtcNow.Ticks,
+                IsWebSocketRequest = signalrRequest.QueryCollection.Transport == "webSockets",
+                RequestType = signalrRequest.Type.ToString()
+            };
+
+            return requestEntity.Save(_sqlOperation);
         }
 
         public bool CompleteRequestTrace(string owinRequestId, SignalrRequest signalrRequest)
         {
-            /// TODO ; IMPL
             return false;
         }
 
         public void FinishSession(string connectionToken)
         {
             _sqlOperation.ExecuteAsync(ExecuteSqlQuery.Update_SessionOnCompleted, 1,
-               Convert.ToString(DateTime.UtcNow.Ticks), connectionToken);
+               DateTime.UtcNow.Ticks, connectionToken);
         }
 
         public void StartSession(SignalrRequest signalrRequest)
@@ -43,17 +68,16 @@ namespace Sahurjt.Signalr.Dashboard.Core
 
             var negotiateResponseObj = JsonConvert.DeserializeObject<NegotiateResponse>(jsonData);
 
-            var sessionObj = new SessionDto
+            var sessionEntity = new SessionDto
             {
                 ConnectionId = negotiateResponseObj.ConnectionId,
                 ConnectionToken = negotiateResponseObj.ConnectionToken,
                 NegotiateData = jsonData,
-                StartTimeStamp = Convert.ToString(DateTime.UtcNow.Ticks)
+                StartTimeStamp = DateTime.UtcNow.Ticks,
+                FinishTimeStamp = 0
             };
 
-            _sqlOperation.Execute(ExecuteSqlQuery.InsertRow_Session,
-                sessionObj.ConnectionId, sessionObj.ConnectionToken, 0,
-                sessionObj.StartTimeStamp, "0", sessionObj.NegotiateData);
+            sessionEntity.Save(_sqlOperation);
         }
     }
 }

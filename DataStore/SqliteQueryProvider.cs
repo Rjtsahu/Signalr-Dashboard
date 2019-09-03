@@ -20,7 +20,9 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
             {SelectSqlQuery.GetAll_Request , "SELECT * FROM Request " },
             {SelectSqlQuery.GetAll_Session , "SELECT * FROM Session " },
             {SelectSqlQuery.GetAll_SessionReport , "SELECT * FROM SessionReport " },
-            {SelectSqlQuery.GetAll_HubData , "SELECT * FROM HubData " }
+            {SelectSqlQuery.GetAll_HubData , "SELECT * FROM HubData " },
+
+            {SelectSqlQuery.GetSingle_Session_By_ConnectionToken , _getSessionWithConnectionToken}
         };
 
         public string GetSql(ExecuteSqlQuery executeSqlEnum)
@@ -116,9 +118,9 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
 
         #region Insert queries
 
-        private const string _insertIntoRequestQuery = @"INSERT INTO Request ( SessionId, RequestUrl, RemoteIp, RemotePort, ServerIp, ServerPort, RequestContentType, RequestBody, Protocol, 
+        private const string _insertIntoRequestQuery = @"INSERT INTO Request (OwinRequestid , SessionId, RequestUrl, RemoteIp, RemotePort, ServerIp, ServerPort, RequestContentType, RequestBody, Protocol, 
                                                       QueryString, User, RequestTimeStamp, ResponseTimeStamp, RequestLatency, StatusCode, ResponseBody, IsWebSocketRequest, RequestType) 
-                                                      VALUES (@SessionId, @RequestUrl, @RemoteIp, @RemotePort, @ServerIp, @ServerPort, @RequestContentType, @RequestBody, @Protocol, @QueryString, @User,
+                                                      VALUES (@OwinRequestId, @SessionId, @RequestUrl, @RemoteIp, @RemotePort, @ServerIp, @ServerPort, @RequestContentType, @RequestBody, @Protocol, @QueryString, @User,
                                                       @RequestTimeStamp, @ResponseTimeStamp, @RequestLatency, @StatusCode, @ResponseBody, @IsWebSocketRequest, @RequestType)";
 
         private const string _insertIntoSessionQuery = @" INSERT INTO Session ( ConnectionId,ConnectionToken, IsCompleted, StartTimeStamp, FinishTimeStamp , NegotiateData)
@@ -136,5 +138,12 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
         private const string _updateSessionWhenCompletedQuery = @"UPDATE Session SET IsCompleted = @IsCompleted , 
                                                                        FinishTimeStamp = @FinishTimeStamp  WHERE ConnectionToken = @ConnectionToken ;";
         #endregion
+
+        #region Select Queries
+
+        private const string _getSessionWithConnectionToken = @" SELECT * FROM Session WHERE ConnectionToken = @ConnectionToken";
+
+        #endregion
+
     }
 }
