@@ -10,9 +10,10 @@ namespace Sahurjt.Signalr.Dashboard.Core
     {
         private readonly ISqlOperation _sqlOperation;
 
-        public DefaultDataTracing()
+        // TODO : make DI more generic
+        public DefaultDataTracing(ISqlOperation sqlOperation)
         {
-            _sqlOperation = DashboardGlobal.ServiceResolver.GetService<ISqlOperation>();
+            _sqlOperation = sqlOperation;
         }
 
         public bool AddRequestTrace(string owinRequestId, SignalrRequest signalrRequest)
@@ -27,12 +28,10 @@ namespace Sahurjt.Signalr.Dashboard.Core
             return false;
         }
 
-        public void FinishSession(string connectionId)
+        public void FinishSession(string connectionToken)
         {
-            /// TODO ; IMPL
-            var updateSql = $"UPDATE Session SET IsCompleted = @IsCompleted , " +
-                $"FinishTimeStamp = @FinishTimeStamp  WHERE ConnectionId = @ConnectionId ;";
-            
+            _sqlOperation.ExecuteAsync(ExecuteSqlQuery.Update_SessionOnCompleted, 1,
+               Convert.ToString(DateTime.UtcNow.Ticks), connectionToken);
         }
 
         public void StartSession(SignalrRequest signalrRequest)

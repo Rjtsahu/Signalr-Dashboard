@@ -67,7 +67,7 @@
         /// Enum used to update record of Session table when a client completes its session.
         /// <para>
         /// Order of parameters : 
-        /// IsCompleted , FinishTimeStamp | ConnectionId (for selection)
+        /// IsCompleted , FinishTimeStamp | ConnectionToken (for selection)
         /// </para>
         /// </summary>
         Update_SessionOnCompleted

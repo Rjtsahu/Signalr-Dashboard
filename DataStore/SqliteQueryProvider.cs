@@ -134,7 +134,7 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
         #region Update Queries
 
         private const string _updateSessionWhenCompletedQuery = @"UPDATE Session SET IsCompleted = @IsCompleted , 
-                                                                       FinishTimeStamp = @FinishTimeStamp  WHERE ConnectionId = @ConnectionId ;";
+                                                                       FinishTimeStamp = @FinishTimeStamp  WHERE ConnectionToken = @ConnectionToken ;";
         #endregion
     }
 }
