@@ -11,7 +11,9 @@
         GetSingle_Request,
         GetSingle_Session,
         GetSingle_HubData,
-        GetSingle_SessionReport
+        GetSingle_SessionReport,
+
+        GetSingle_Session_By_ConnectionToken
     }
 
     // Use Prefix "InsertRow_" for inserting query for a table.
@@ -67,7 +69,7 @@
         /// Enum used to update record of Session table when a client completes its session.
         /// <para>
         /// Order of parameters : 
-        /// IsCompleted , FinishTimeStamp | ConnectionId (for selection)
+        /// IsCompleted , FinishTimeStamp | ConnectionToken (for selection)
         /// </para>
         /// </summary>
         Update_SessionOnCompleted
