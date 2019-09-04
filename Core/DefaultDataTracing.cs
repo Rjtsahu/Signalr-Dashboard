@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Sahurjt.Signalr.Dashboard.Core.Message;
 using Sahurjt.Signalr.Dashboard.Core.Message.Response;
 using Sahurjt.Signalr.Dashboard.DataStore;
 using Sahurjt.Signalr.Dashboard.DataStore.Dto;
@@ -85,7 +86,19 @@ namespace Sahurjt.Signalr.Dashboard.Core
             };
 
             var saved = sessionEntity.Save(_sqlOperation);
-            if (saved) AddRequestTrace(signalrRequest, negotiateResponseObj.ConnectionToken);
+            if (saved)
+            {
+                AddRequestTrace(signalrRequest, negotiateResponseObj.ConnectionToken);
+                AddHubData(sessionEntity.ConnectionId, signalrRequest.QueryCollection.ConnectionData);
+            }
+        }
+
+
+        private void AddHubData(string connectionId, string hubData)
+        {
+            var updateSql = @"UPDATE Session SET HubData =@HubData WHERE ConnectionId = @ConnectionId )";
+
+            _sqlOperation.ExecuteAsync(updateSql, hubData, connectionId);
         }
     }
 }

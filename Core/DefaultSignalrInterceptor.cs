@@ -8,11 +8,13 @@ namespace Sahurjt.Signalr.Dashboard.Core
     {
         private readonly IDataTracing _tracer;
 
-        public DefaultSignalrInterceptor(IOwinContext owinContext) : base(owinContext) {
+        public DefaultSignalrInterceptor(IOwinContext owinContext) : base(owinContext)
+        {
             _tracer = DashboardGlobal.ServiceResolver.GetService<IDataTracing>();
         }
 
-        public DefaultSignalrInterceptor(IOwinContext owinContext, TimeSpan pipelineProcessingTime) : base(owinContext, pipelineProcessingTime) {
+        public DefaultSignalrInterceptor(IOwinContext owinContext, TimeSpan pipelineProcessingTime) : base(owinContext, pipelineProcessingTime)
+        {
             _tracer = DashboardGlobal.ServiceResolver.GetService<IDataTracing>();
         }
 

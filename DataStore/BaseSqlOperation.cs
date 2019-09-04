@@ -29,6 +29,15 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
             return await Task.Run(() => (ExecuteNonQuery(_sqlQueryProvider.GetSql(executeSql), parameters)));
         }
 
+        public int Execute(string executeRawSql, params object[] parameters)
+        {
+            return ExecuteNonQuery(executeRawSql, parameters);
+        }
+
+        public async Task<int> ExecuteAsync(string executeRawSql, params object[] parameters)
+        {
+            return await Task.Run(() => (ExecuteNonQuery(executeRawSql, parameters)));
+        }
 
         public T Select<T>(SelectSqlQuery selectSql, params object[] parameters)
         {

@@ -10,6 +10,7 @@ namespace Sahurjt.Signalr.Dashboard.Core
         void CompleteRequestTrace(SignalrRequest signalrRequest);
 
         void FinishSession(string connectionToken);
+
     }
 
 }
