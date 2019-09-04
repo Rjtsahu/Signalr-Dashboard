@@ -70,7 +70,7 @@ namespace Sahurjt.Signalr.Dashboard.Core
         {
             LogHelper.Log("OnStart");
         }
-
+        
         public override void OnPostRequest()
         {
             LogHelper.Log("OnPostRequest");

@@ -96,7 +96,7 @@ namespace Sahurjt.Signalr.Dashboard.Core
 
         private void AddHubData(string connectionId, string hubData)
         {
-            var updateSql = @"UPDATE Session SET HubData =@HubData WHERE ConnectionId = @ConnectionId )";
+            var updateSql = @"UPDATE Session SET HubData =@HubData WHERE ConnectionId = @ConnectionId";
 
             _sqlOperation.ExecuteAsync(updateSql, hubData, connectionId);
         }

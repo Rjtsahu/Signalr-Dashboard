@@ -62,7 +62,8 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
 	                IsCompleted INTEGER DEFAULT 0,
 	                StartTimeStamp DATETIME DEFAULT CURRENT_TIMESTAMP,
 	                FinishTimeStamp DATETIME DEFAULT CURRENT_TIMESTAMP,
-                    NegotiateData TEXT
+                    NegotiateData TEXT,
+                    HubData TEXT
                 );
 
                 CREATE TABLE IF NOT EXISTS SessionReport
