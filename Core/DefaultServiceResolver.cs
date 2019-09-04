@@ -1,6 +1,6 @@
 ﻿using Sahurjt.Signalr.Dashboard.DataStore;
 using System;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 
 namespace Sahurjt.Signalr.Dashboard.Core
 {
@@ -9,7 +9,7 @@ namespace Sahurjt.Signalr.Dashboard.Core
     /// </summary>
     internal class DefaultServiceResolver : IServiceResolver, IDisposable
     {
-        private readonly Dictionary<Type, object> _resolver = new Dictionary<Type, object>();
+        private readonly ConcurrentDictionary<Type, object> _resolver = new ConcurrentDictionary<Type, object>();
 
 
         public DefaultServiceResolver()
@@ -47,7 +47,7 @@ namespace Sahurjt.Signalr.Dashboard.Core
             {
                 throw new Exception("The object intitalizer is already registered for this interface.");
             }
-            _resolver.Add(typeof(TInterface), Activator.CreateInstance<TService>());
+            _resolver.TryAdd(typeof(TInterface), Activator.CreateInstance<TService>());
         }
 
         public void Register<TInterface, TService>(Func<TService> activator) where TService : TInterface
@@ -62,7 +62,7 @@ namespace Sahurjt.Signalr.Dashboard.Core
                 throw new Exception("The object intitalizer is already registered for this interface.");
             }
 
-            _resolver.Add(typeof(TInterface), activator());
+            _resolver.TryAdd(typeof(TInterface), activator());
         }
 
         public void Replace<TInterface, TService>(Func<TService> activator) where TService : TInterface
@@ -77,8 +77,8 @@ namespace Sahurjt.Signalr.Dashboard.Core
                 throw new Exception("No class is registered for this interface.");
             }
 
-            _resolver.Remove(typeof(TInterface));
-            _resolver.Add(typeof(TInterface), activator());
+            _resolver.TryRemove(typeof(TInterface), out var _);
+            _resolver.TryAdd(typeof(TInterface), activator());
         }
 
         public void Dispose()
