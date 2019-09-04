@@ -72,13 +72,13 @@ namespace Sahurjt.Signalr.Dashboard.Core
         public override void OnPostRequest()
         {
             LogHelper.Log("OnPostRequest");
-            _tracer.CompleteRequestTrace(CurrentRequest.OwinRequestId, CurrentRequest);
+            _tracer.CompleteRequestTrace(CurrentRequest);
         }
 
         public override void OnPreRequest()
         {
             LogHelper.Log("OnPreRequest");
-            _tracer.AddRequestTrace(CurrentRequest.OwinRequestId, CurrentRequest);
+            _tracer.AddRequestTrace(CurrentRequest);
         }
     }
 }

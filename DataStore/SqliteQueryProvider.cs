@@ -13,7 +13,9 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
             { ExecuteSqlQuery.InsertRow_Session,_insertIntoSessionQuery},
             { ExecuteSqlQuery.InsertRow_SessionReport,_insertIntoSessionReportQuery},
             { ExecuteSqlQuery.InsertRow_HubData,_insertIntoHubDataQuery},
+
             { ExecuteSqlQuery.Update_SessionOnCompleted,_updateSessionWhenCompletedQuery},
+            { ExecuteSqlQuery.Update_RequestOnCompleted,_updateRequestWhenCompletedQuery},
         };
 
         public IDictionary<SelectSqlQuery, string> SelectSqls => new Dictionary<SelectSqlQuery, string> {
@@ -137,6 +139,9 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
 
         private const string _updateSessionWhenCompletedQuery = @"UPDATE Session SET IsCompleted = @IsCompleted , 
                                                                        FinishTimeStamp = @FinishTimeStamp  WHERE ConnectionToken = @ConnectionToken ;";
+
+        private const string _updateRequestWhenCompletedQuery = @"UPDATE Request SET ResponseTimeStamp = @ResponseTimeStamp , RequestLatency = @RequestLatency,
+                                                                    StatusCode = @StatusCode , ResponseBody = @ResponseBody WHERE OwinRequestId = @OwinRequestId";
         #endregion
 
         #region Select Queries

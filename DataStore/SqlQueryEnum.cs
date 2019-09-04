@@ -72,6 +72,15 @@
         /// IsCompleted , FinishTimeStamp | ConnectionToken (for selection)
         /// </para>
         /// </summary>
-        Update_SessionOnCompleted
+        Update_SessionOnCompleted,
+
+        /// <summary>
+        /// Enum used to update record of Request table when a client completes its particular type of http request.
+        /// <para>
+        /// Order of parameters : 
+        /// ResponseTimeStamp , RequestLatency , StatusCode , ResponseBody , OwinRequestId
+        /// </para>
+        /// </summary>
+        Update_RequestOnCompleted
     }
 }

@@ -17,19 +17,25 @@ namespace Sahurjt.Signalr.Dashboard.Core
             _sqlOperation = sqlOperation;
         }
 
-        public bool AddRequestTrace(string owinRequestId, SignalrRequest signalrRequest)
+        public bool AddRequestTrace(SignalrRequest signalrRequest)
         {
-            var owinRequest = signalrRequest.OwinContext.Request;
+            return AddRequestTrace(signalrRequest, signalrRequest.QueryCollection.ConnectionToken);
+        }
 
+        private bool AddRequestTrace(SignalrRequest signalrRequest, string connectionToken)
+        {
             var sessionObj = _sqlOperation.Select<SessionDto>(SelectSqlQuery.GetSingle_Session_By_ConnectionToken,
-                signalrRequest.QueryCollection.ConnectionToken);
+               connectionToken);
 
             if (sessionObj == null) return false;
+
+
+            var owinRequest = signalrRequest.OwinContext.Request;
 
             var requestEntity = new RequestDto
             {
                 SessionId = sessionObj.SessionId,
-                OwinRequestId = owinRequestId,
+                OwinRequestId = signalrRequest.OwinRequestId,
                 RequestUrl = owinRequest.Uri.AbsoluteUri,
                 RemoteIp = owinRequest.RemoteIpAddress,
                 RemotePort = owinRequest.RemotePort ?? 0,
@@ -48,9 +54,10 @@ namespace Sahurjt.Signalr.Dashboard.Core
             return requestEntity.Save(_sqlOperation);
         }
 
-        public bool CompleteRequestTrace(string owinRequestId, SignalrRequest signalrRequest)
+        public void CompleteRequestTrace(SignalrRequest signalrRequest)
         {
-            return false;
+            _sqlOperation.ExecuteAsync(ExecuteSqlQuery.Update_RequestOnCompleted, DateTime.UtcNow.Ticks, 0,
+                signalrRequest.OwinContext.Response.StatusCode, signalrRequest.ResponseBody, signalrRequest.OwinRequestId);
         }
 
         public void FinishSession(string connectionToken)
@@ -77,7 +84,8 @@ namespace Sahurjt.Signalr.Dashboard.Core
                 FinishTimeStamp = 0
             };
 
-            sessionEntity.Save(_sqlOperation);
+            var saved = sessionEntity.Save(_sqlOperation);
+            if (saved) AddRequestTrace(signalrRequest, negotiateResponseObj.ConnectionToken);
         }
     }
 }
