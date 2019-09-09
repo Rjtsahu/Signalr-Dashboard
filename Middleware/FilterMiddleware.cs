@@ -27,7 +27,6 @@ namespace Sahurjt.Signalr.Dashboard.Middleware
 
             if (ShouldRequestBeProcessed(environment.Request))
             {
-
                 await BeforeNextPipeline(environment);
 
                 environment.Request.Body.Seek(0, SeekOrigin.Begin);
@@ -41,15 +40,9 @@ namespace Sahurjt.Signalr.Dashboard.Middleware
                 await Next.Invoke(environment);
 
                 responseBuffer.Seek(0, SeekOrigin.Begin);
-                var reader = new StreamReader(responseBuffer);
-                string responseBody = reader.ReadToEnd();
-
-                responseBuffer.Seek(0, SeekOrigin.Begin);
                 responseBuffer.CopyTo(responseStream);
 
                 var processingTime = DateTime.UtcNow.Subtract(startTime);
-                //// set response body as env key
-                environment.Set("responseBody", responseBody);
 
                 await AfterNextPipeline(environment, processingTime);
             }
