@@ -64,10 +64,20 @@ namespace Sahurjt.Signalr.Dashboard.Extensions
         {
             if (owinRequest.Body.CanRead)
             {
+                owinRequest.Body.Seek(0, SeekOrigin.Begin);
                 return new StreamReader(owinRequest.Body).ReadToEnd();
             }
             return null;
         }
-      
+
+        internal static string ReadBody(this IOwinResponse owinResponse)
+        {
+            if (owinResponse.Body.CanRead)
+            {
+                owinResponse.Body.Seek(0, SeekOrigin.Begin);
+                return new StreamReader(owinResponse.Body).ReadToEnd();
+            }
+            return null;
+        }
     }
 }

@@ -27,25 +27,28 @@ namespace Sahurjt.Signalr.Dashboard.Middleware
 
             if (ShouldRequestBeProcessed(environment.Request))
             {
+
                 await BeforeNextPipeline(environment);
+
+                environment.Request.Body.Seek(0, SeekOrigin.Begin);
                 startTime = DateTime.UtcNow;
 
-                // Buffer the response
-                var stream = environment.Response.Body;
-                var buffer = new MemoryStream();
-                environment.Response.Body = buffer;
+                //// Buffer the response
+                var responseStream = environment.Response.Body;
+                var responseBuffer = new MemoryStream();
+                environment.Response.Body = responseBuffer;
 
                 await Next.Invoke(environment);
 
-                buffer.Seek(0, SeekOrigin.Begin);
-                var reader = new StreamReader(buffer);
+                responseBuffer.Seek(0, SeekOrigin.Begin);
+                var reader = new StreamReader(responseBuffer);
                 string responseBody = reader.ReadToEnd();
 
-                buffer.Seek(0, SeekOrigin.Begin);
-                buffer.CopyTo(stream);
+                responseBuffer.Seek(0, SeekOrigin.Begin);
+                responseBuffer.CopyTo(responseStream);
 
                 var processingTime = DateTime.UtcNow.Subtract(startTime);
-                // set response body as env key
+                //// set response body as env key
                 environment.Set("responseBody", responseBody);
 
                 await AfterNextPipeline(environment, processingTime);

@@ -5,11 +5,12 @@ namespace Sahurjt.Signalr.Dashboard.Core
     {
         void StartSession(SignalrRequest signalrRequest);
 
-        bool AddRequestTrace(string owinRequestId, SignalrRequest signalrRequest);
+        bool AddRequestTrace(SignalrRequest signalrRequest);
 
-        bool CompleteRequestTrace(string owinRequestId, SignalrRequest signalrRequest);
+        void CompleteRequestTrace(SignalrRequest signalrRequest);
 
         void FinishSession(string connectionToken);
+
     }
 
 }

@@ -8,11 +8,13 @@ namespace Sahurjt.Signalr.Dashboard.Core
     {
         private readonly IDataTracing _tracer;
 
-        public DefaultSignalrInterceptor(IOwinContext owinContext) : base(owinContext) {
+        public DefaultSignalrInterceptor(IOwinContext owinContext) : base(owinContext)
+        {
             _tracer = DashboardGlobal.ServiceResolver.GetService<IDataTracing>();
         }
 
-        public DefaultSignalrInterceptor(IOwinContext owinContext, TimeSpan pipelineProcessingTime) : base(owinContext, pipelineProcessingTime) {
+        public DefaultSignalrInterceptor(IOwinContext owinContext, TimeSpan pipelineProcessingTime) : base(owinContext, pipelineProcessingTime)
+        {
             _tracer = DashboardGlobal.ServiceResolver.GetService<IDataTracing>();
         }
 
@@ -68,17 +70,17 @@ namespace Sahurjt.Signalr.Dashboard.Core
         {
             LogHelper.Log("OnStart");
         }
-
+        
         public override void OnPostRequest()
         {
             LogHelper.Log("OnPostRequest");
-            _tracer.CompleteRequestTrace(CurrentRequest.OwinRequestId, CurrentRequest);
+            _tracer.CompleteRequestTrace(CurrentRequest);
         }
 
         public override void OnPreRequest()
         {
             LogHelper.Log("OnPreRequest");
-            _tracer.AddRequestTrace(CurrentRequest.OwinRequestId, CurrentRequest);
+            _tracer.AddRequestTrace(CurrentRequest);
         }
     }
 }

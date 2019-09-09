@@ -9,15 +9,15 @@ namespace Sahurjt.Signalr.Dashboard.Core.Message
     internal class RequestQueryCollection
     {
 
-        public string ClientProtocol { get; set; }
+        public string ClientProtocol { get;private set; }
 
-        public string ConnectionData { get; set; }
+        public string ConnectionData { get;private set; }
 
-        public string Transport { get; set; }
+        public string Transport { get;private set; }
 
-        public string ConnectionToken { get; set; }
+        public string ConnectionToken { get;private set; }
 
-        protected string QueryString { get; set; }
+        protected string QueryString { get;private set; }
 
         protected Dictionary<string, string> QueryCollection { get; private set; }
 

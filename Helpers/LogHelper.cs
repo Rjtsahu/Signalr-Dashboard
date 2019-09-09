@@ -1,18 +1,25 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.IO;
 
 namespace Sahurjt.Signalr.Dashboard.Helpers
 {
     public class LogHelper
     {
-        private static readonly bool enableDebug = true;
+        private static bool enableDebug = true;
+        private static readonly string logFilePath = @"c:\db\logs.log";
+        private static readonly StreamWriter logger = File.AppendText(logFilePath);
+
 
         public static void Log(string message)
         {
+
             if (enableDebug)
             {
-                var time = DateTime.Now;
-                System.Diagnostics.Debug.WriteLine($"--- {time} | {message} ---");
+                var logText = $"--- {DateTime.Now} | {message} ---";
+                System.Diagnostics.Debug.WriteLine(logText);
+                logger.WriteLine(logText);
+                logger.Flush();
             }
         }
 
@@ -34,6 +41,9 @@ namespace Sahurjt.Signalr.Dashboard.Helpers
             Log(message + " : " + string.Join(" , ", args ?? new string[] { }));
         }
 
-
+        public static void SetLogging(bool enabled = true)
+        {
+            enableDebug = enabled;
+        }
     }
 }
