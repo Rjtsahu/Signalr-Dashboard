@@ -2,6 +2,7 @@
 using Sahurjt.Signalr.Dashboard.Extensions;
 using System;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Sahurjt.Signalr.Dashboard.Middleware
@@ -32,12 +33,17 @@ namespace Sahurjt.Signalr.Dashboard.Middleware
                 environment.Request.Body.Seek(0, SeekOrigin.Begin);
                 startTime = DateTime.UtcNow;
 
+                var cancellationSource = new CancellationTokenSource();
+
                 //// Buffer the response
                 var responseStream = environment.Response.Body;
                 var responseBuffer = new MemoryStream();
+
                 environment.Response.Body = responseBuffer;
 
                 await Next.Invoke(environment);
+
+                cancellationSource.Cancel();
 
                 responseBuffer.Seek(0, SeekOrigin.Begin);
                 responseBuffer.CopyTo(responseStream);
@@ -45,6 +51,7 @@ namespace Sahurjt.Signalr.Dashboard.Middleware
                 var processingTime = DateTime.UtcNow.Subtract(startTime);
 
                 await AfterNextPipeline(environment, processingTime);
+
             }
             else
             {
@@ -55,7 +62,12 @@ namespace Sahurjt.Signalr.Dashboard.Middleware
 
         private bool ShouldRequestBeProcessed(IOwinRequest owinRequest)
         {
-            return owinRequest.Path.StartsWithSegments(PathString.FromUriComponent(_urlStartSegment));
+            // as of now we cannot intercept connect call on serverSentEvents as it will break the response event pipe
+            // need to find alternative solution for this, for now ignoring this request to be processed.
+
+            return owinRequest.Path.StartsWithSegments(PathString.FromUriComponent(_urlStartSegment))
+             && !owinRequest.Uri.AbsoluteUri.Contains("connect?transport=serverSentEvents");
         }
+
     }
 }
