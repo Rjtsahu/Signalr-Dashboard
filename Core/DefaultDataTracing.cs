@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using Sahurjt.Signalr.Dashboard.Core.Message;
 using Sahurjt.Signalr.Dashboard.Core.Message.Response;
 using Sahurjt.Signalr.Dashboard.DataStore;
 using Sahurjt.Signalr.Dashboard.DataStore.Dto;
@@ -58,7 +57,7 @@ namespace Sahurjt.Signalr.Dashboard.Core
         public void CompleteRequestTrace(SignalrRequest signalrRequest)
         {
             _sqlOperation.ExecuteAsync(ExecuteSqlQuery.Update_RequestOnCompleted, DateTime.UtcNow.Ticks, 0,
-                signalrRequest.OwinContext.Response.StatusCode, signalrRequest.ResponseBody, signalrRequest.OwinRequestId);
+                signalrRequest.OwinContext.Response.StatusCode, signalrRequest.OwinContext.Response.ReadBody(), signalrRequest.OwinRequestId);
         }
 
         public void FinishSession(string connectionToken)
@@ -70,7 +69,7 @@ namespace Sahurjt.Signalr.Dashboard.Core
         public void StartSession(SignalrRequest signalrRequest)
         {
             /// starts session for a particular browser client
-            var jsonData = signalrRequest.ResponseBody;
+            var jsonData = signalrRequest.OwinContext.Response.ReadBody();
 
             if (string.IsNullOrEmpty(jsonData)) return;
 

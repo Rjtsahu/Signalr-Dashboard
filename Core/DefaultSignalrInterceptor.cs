@@ -75,6 +75,7 @@ namespace Sahurjt.Signalr.Dashboard.Core
         {
             LogHelper.Log("OnPostRequest");
             _tracer.CompleteRequestTrace(CurrentRequest);
+
         }
 
         public override void OnPreRequest()
