@@ -2,7 +2,6 @@
 using Sahurjt.Signalr.Dashboard.Extensions;
 using System;
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Sahurjt.Signalr.Dashboard.Middleware
@@ -33,8 +32,6 @@ namespace Sahurjt.Signalr.Dashboard.Middleware
                 environment.Request.Body.Seek(0, SeekOrigin.Begin);
                 startTime = DateTime.UtcNow;
 
-                var cancellationSource = new CancellationTokenSource();
-
                 //// Buffer the response
                 var responseStream = environment.Response.Body;
                 var responseBuffer = new MemoryStream();
@@ -42,8 +39,6 @@ namespace Sahurjt.Signalr.Dashboard.Middleware
                 environment.Response.Body = responseBuffer;
 
                 await Next.Invoke(environment);
-
-                cancellationSource.Cancel();
 
                 responseBuffer.Seek(0, SeekOrigin.Begin);
                 responseBuffer.CopyTo(responseStream);
