@@ -14,7 +14,7 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
 
         private readonly ISqlQueryProvider _sqlQueryProvider;
 
-        public BaseSqlOperation(ISqlQueryProvider sqlQueryProvider)
+        protected BaseSqlOperation(ISqlQueryProvider sqlQueryProvider)
         {
             _sqlQueryProvider = sqlQueryProvider;
         }
