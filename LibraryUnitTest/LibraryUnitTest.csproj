@@ -72,6 +72,7 @@
     <Compile Include="Core\DefaultDataTracingTests.cs" />
     <Compile Include="Core\DefaultServiceResolverTests.cs" />
     <Compile Include="Core\Message\RequestQueryCollectionTests.cs" />
+    <Compile Include="Core\SignalrRequestTests.cs" />
     <Compile Include="Middleware\SignalrInterceptorMiddlewareTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestEnables\Constants.cs" />

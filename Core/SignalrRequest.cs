@@ -52,7 +52,7 @@ namespace Sahurjt.Signalr.Dashboard.Core
             var path = OwinContext.Request.Path;
             var lastSegment = path.Value.Substring(path.Value.LastIndexOf('/') + 1);
 
-            if (Enum.TryParse<RequestType>(lastSegment ?? "", true, out var result))
+            if (Enum.TryParse<RequestType>(lastSegment, true, out var result))
             {
                 return result;
             }
