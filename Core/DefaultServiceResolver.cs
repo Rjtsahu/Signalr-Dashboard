@@ -47,6 +47,7 @@ namespace Sahurjt.Signalr.Dashboard.Core
             {
                 throw new Exception("The object intitalizer is already registered for this interface.");
             }
+
             _resolver.TryAdd(typeof(TInterface), Activator.CreateInstance<TService>());
         }
 

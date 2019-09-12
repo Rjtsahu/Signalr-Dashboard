@@ -2,6 +2,7 @@
 using System.IO;
 using System.Security.Principal;
 using System.Text;
+using LibraryUnitTest.TestEnables;
 using Microsoft.Owin;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -14,7 +15,6 @@ namespace LibraryUnitTest.Core
     [TestClass]
     public class DefaultDataTracingTests
     {
-        private static readonly string _negotiateResponse = "{\"Url\":\"/signalr/signalr\",\"ConnectionToken\":\"o8v8NNB7wjadNXfF78ZSBH1lN26y/KbP1HlqFpPh/KDF8pM3Nw7Rhfw/4dO12hL4/C+rLFOmsliYGRfSwEvZ6Oel48omgGnS2cclS459N7on4HmFBk3xDuBJhN6RE98O\",\"ConnectionId\":\"84a33a5a-e084-41b6-8eda-183089762f40\",\"KeepAliveTimeout\":20.0,\"DisconnectTimeout\":30.0,\"ConnectionTimeout\":110.0,\"TryWebSockets\":true,\"ProtocolVersion\":\"2.0\",\"TransportConnectTimeout\":5.0,\"LongPollDelay\":0.0}";
 
         private Mock<ISqlOperation> sqlOperationMock;
 
@@ -73,7 +73,7 @@ namespace LibraryUnitTest.Core
         [TestMethod]
         public void TestStartSession_WhenSaved()
         {
-            var jsonBytes = Encoding.ASCII.GetBytes(_negotiateResponse);
+            var jsonBytes = Encoding.ASCII.GetBytes(Constants.NegotiateJsonResponse);
 
             sqlOperationMock.Setup(s => s.Execute(It.IsAny<ExecuteSqlQuery>(), It.IsAny<object[]>())).Returns(1);
             sqlOperationMock.Setup(s => s.ExecuteAsync(It.IsAny<ExecuteSqlQuery>(), It.IsAny<object[]>()));
@@ -102,7 +102,7 @@ namespace LibraryUnitTest.Core
         [TestMethod]
         public void TestStartSession_WhenSessionNotExists()
         {
-            var jsonBytes = Encoding.ASCII.GetBytes(_negotiateResponse);
+            var jsonBytes = Encoding.ASCII.GetBytes(Constants.NegotiateJsonResponse);
 
             sqlOperationMock.Setup(s => s.Execute(It.IsAny<ExecuteSqlQuery>(), It.IsAny<object[]>())).Returns(1);
             sqlOperationMock.Setup(s => s.ExecuteAsync(It.IsAny<ExecuteSqlQuery>(), It.IsAny<object[]>()));
@@ -163,7 +163,7 @@ namespace LibraryUnitTest.Core
         [TestMethod]
         public void TestAddRequestTrace_WhenSuccess()
         {
-            var jsonBytes = Encoding.ASCII.GetBytes(_negotiateResponse);
+            var jsonBytes = Encoding.ASCII.GetBytes(Constants.NegotiateJsonResponse);
 
             sqlOperationMock.Setup(s => s.Execute(It.IsAny<ExecuteSqlQuery>(), It.IsAny<object[]>())).Returns(1);
             sqlOperationMock.Setup(s => s.ExecuteAsync(It.IsAny<ExecuteSqlQuery>(), It.IsAny<object[]>()));
@@ -186,7 +186,7 @@ namespace LibraryUnitTest.Core
         [TestMethod]
         public void TestAddRequestTrace_WhenSessionNotExists_Failure()
         {
-            var jsonBytes = Encoding.ASCII.GetBytes(_negotiateResponse);
+            var jsonBytes = Encoding.ASCII.GetBytes(Constants.NegotiateJsonResponse);
 
             sqlOperationMock.Setup(s => s.Execute(It.IsAny<ExecuteSqlQuery>(), It.IsAny<object[]>())).Returns(1);
             sqlOperationMock.Setup(s => s.ExecuteAsync(It.IsAny<ExecuteSqlQuery>(), It.IsAny<object[]>()));
@@ -209,7 +209,7 @@ namespace LibraryUnitTest.Core
         [TestMethod]
         public void TestStartSession_WhenNotSaved()
         {
-            var jsonBytes = Encoding.ASCII.GetBytes(_negotiateResponse);
+            var jsonBytes = Encoding.ASCII.GetBytes(Constants.NegotiateJsonResponse);
 
             sqlOperationMock.Setup(s => s.Execute(It.IsAny<ExecuteSqlQuery>(), It.IsAny<object[]>())).Returns(0);
             sqlOperationMock.Setup(s => s.ExecuteAsync(It.IsAny<ExecuteSqlQuery>(), It.IsAny<object[]>()));
@@ -237,7 +237,7 @@ namespace LibraryUnitTest.Core
         [TestMethod]
         public void TestAddRequestTrace_OnVariousCollationBranches()
         {
-            var jsonBytes = Encoding.ASCII.GetBytes(_negotiateResponse);
+            var jsonBytes = Encoding.ASCII.GetBytes(Constants.NegotiateJsonResponse);
 
             sqlOperationMock.Setup(s => s.Execute(It.IsAny<ExecuteSqlQuery>(), It.IsAny<object[]>())).Returns(1);
             sqlOperationMock.Setup(s => s.ExecuteAsync(It.IsAny<ExecuteSqlQuery>(), It.IsAny<object[]>()));
@@ -262,7 +262,7 @@ namespace LibraryUnitTest.Core
             principleMock.Setup(s => s.Identity).Returns(identityMock.Object);
 
             signalrRequest = new SignalrRequest(owinContextMock.Object);
-            Assert.IsTrue (dataTracingService.AddRequestTrace(signalrRequest));
+            Assert.IsTrue(dataTracingService.AddRequestTrace(signalrRequest));
 
             // CASE 3
             principleMock.Setup(s => s.Identity.Name).Returns("");

@@ -17,6 +17,7 @@ namespace Sahurjt.Signalr.Dashboard.Middleware
         {
             try
             {
+                // TODO : use DI instead for unit testing
                 new DefaultSignalrInterceptor(owinContext).InvokeRequestMethod();
             }
             catch (Exception e)
@@ -26,7 +27,7 @@ namespace Sahurjt.Signalr.Dashboard.Middleware
 
             return Task.CompletedTask;
         }
-
+        
         public override Task AfterNextPipeline(IOwinContext owinContext, TimeSpan pipelineProcessingTime)
         {
             try
