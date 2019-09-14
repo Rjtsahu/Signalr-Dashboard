@@ -89,6 +89,31 @@ namespace LibraryUnitTest.Core
             );
         }
 
+        [TestMethod]
+        public void Test_Replace_Success()
+        {
+            serviceResolver.Register<IDataTableObject, SessionDto>(()=>new SessionDto());
+            serviceResolver.Replace<IDataTableObject, SessionDto>(new SessionDto());
+            var service = serviceResolver.GetService<IDataTableObject>();
+            Assert.IsNotNull(service);
+            Assert.IsInstanceOfType(service, typeof(IDataTableObject));
+        }
+
+        [TestMethod]
+        public void Test_Replace_ShouldThrowException_WhenKeyIsNotInterface()
+        {
+            Assert.ThrowsException<ArgumentException>(() =>
+                serviceResolver.Replace<SessionDto, SessionDto>(new SessionDto())
+            );
+        }
+
+        [TestMethod]
+        public void Test_Replace_ShouldThrowException_WhenAlreadyRegistered()
+        {
+            Assert.ThrowsException<Exception>(() =>
+                serviceResolver.Replace<IDataTableObject, SessionDto>(new SessionDto())
+            );
+        }
 
         [TestMethod]
         public void Test_ReplaceFunc_Success()

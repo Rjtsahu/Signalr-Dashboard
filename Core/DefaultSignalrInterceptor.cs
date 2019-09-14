@@ -19,66 +19,66 @@ namespace Sahurjt.Signalr.Dashboard.Core
         }
 
 
-        public override void OnAbort()
+        protected override void OnAbort()
         {
             LogHelper.Log("OnAbort");
 
             _tracer.FinishSession(CurrentRequest.QueryCollection.ConnectionToken);
         }
 
-        public override void OnConnect()
+        protected override void OnConnect()
         {
             LogHelper.Log("OnConnect");
         }
 
-        public override void OnNegotiate()
+        protected override void OnNegotiate()
         {
             LogHelper.Log("OnNegotiate");
         }
 
-        public override void AfterNegotiate()
+        protected override void AfterNegotiate()
         {
             LogHelper.Log("AfterNegotiate");
             _tracer.StartSession(CurrentRequest);
         }
 
 
-        public override void OnPing()
+        protected override void OnPing()
         {
             LogHelper.Log("OnPing");
 
         }
 
-        public override void OnPool()
+        protected override void OnPoll()
         {
             LogHelper.Log("OnPool");
         }
 
-        public override void OnReconnect()
+        protected override void OnReconnect()
         {
             LogHelper.Log("OnReconnect");
 
         }
 
-        public override void OnSend()
+        protected override void OnSend()
         {
             LogHelper.Log("OnSend");
 
         }
 
-        public override void OnStart()
+        protected override void OnStart()
         {
             LogHelper.Log("OnStart");
         }
-        
-        public override void OnPostRequest()
+
+        protected override void OnPostRequest()
         {
             LogHelper.Log("OnPostRequest");
             _tracer.CompleteRequestTrace(CurrentRequest);
 
         }
 
-        public override void OnPreRequest()
+        protected override void OnPreRequest()
         {
             LogHelper.Log("OnPreRequest");
             _tracer.AddRequestTrace(CurrentRequest);

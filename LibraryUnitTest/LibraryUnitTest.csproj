@@ -71,6 +71,7 @@
     <Compile Include="Configuration\InterceptorConfigurationTests.cs" />
     <Compile Include="Core\DefaultDataTracingTests.cs" />
     <Compile Include="Core\DefaultServiceResolverTests.cs" />
+    <Compile Include="Core\DefaultSignalrInterceptorTests.cs" />
     <Compile Include="Core\Message\RequestQueryCollectionTests.cs" />
     <Compile Include="Core\SignalrRequestTests.cs" />
     <Compile Include="Middleware\SignalrInterceptorMiddlewareTests.cs" />
