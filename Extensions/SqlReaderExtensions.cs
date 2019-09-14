@@ -1,20 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Common;
+using System.Data;
 using System.Linq;
 
 namespace Sahurjt.Signalr.Dashboard.Extensions
 {
     internal static class SqlReaderExtensions
     {
-        public static T ToObject<T>(this DbDataReader reader)
+        public static T ToObject<T>(this IDataReader reader)
         {
             if (reader == null || !reader.Read()) return default(T);
 
             return DbDataReaderToObject<T>(reader);
         }
 
-        public static IList<T> ToList<T>(this DbDataReader reader)
+        public static IList<T> ToList<T>(this IDataReader reader)
         {
             IList<T> items = new List<T>();
 
@@ -26,17 +26,17 @@ namespace Sahurjt.Signalr.Dashboard.Extensions
         }
 
 
-        private static T DbDataReaderToObject<T>(DbDataReader reader)
+        private static T DbDataReaderToObject<T>(IDataReader reader)
         {
             var obj = Activator.CreateInstance<T>();
-            var columns = Enumerable.Range(0, reader.FieldCount).Select(reader.GetName).Select(s=>s.ToLower()).ToList();
-            var fields = typeof(T).GetProperties().Where(w=> columns.Contains(w.Name.ToLower()) ).ToList();
+            var columns = Enumerable.Range(0, reader.FieldCount).Select(reader.GetName).Select(s => s.ToLower()).ToList();
+            var fields = typeof(T).GetProperties().Where(w => columns.Contains(w.Name.ToLower())).ToList();
 
             foreach (var fieldInfo in fields)
             {
                 try
                 {
-                    fieldInfo.SetValue(obj, Convert.ChangeType(reader[fieldInfo.Name],fieldInfo.PropertyType));
+                    fieldInfo.SetValue(obj, Convert.ChangeType(reader[fieldInfo.Name], fieldInfo.PropertyType));
                 }
                 catch { }
             }

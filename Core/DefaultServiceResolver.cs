@@ -47,6 +47,7 @@ namespace Sahurjt.Signalr.Dashboard.Core
             {
                 throw new Exception("The object intitalizer is already registered for this interface.");
             }
+
             _resolver.TryAdd(typeof(TInterface), Activator.CreateInstance<TService>());
         }
 
@@ -64,6 +65,24 @@ namespace Sahurjt.Signalr.Dashboard.Core
 
             _resolver.TryAdd(typeof(TInterface), activator());
         }
+
+
+        public void Replace<TInterface, TService>(TInterface newService) where TService : TInterface
+        {
+            if (!typeof(TInterface).IsInterface)
+            {
+                throw new ArgumentException("Service type must be an interface.");
+            }
+
+            if (!_resolver.ContainsKey(typeof(TInterface)))
+            {
+                throw new Exception("No class is registered for this interface.");
+            }
+
+            _resolver.TryRemove(typeof(TInterface), out var _);
+            _resolver.TryAdd(typeof(TInterface), newService);
+        }
+
 
         public void Replace<TInterface, TService>(Func<TService> activator) where TService : TInterface
         {

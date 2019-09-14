@@ -22,6 +22,7 @@ namespace Sahurjt.Signalr.Dashboard.Middleware
 
         public override async Task Invoke(IOwinContext environment)
         {
+
             DateTime startTime = DateTime.UtcNow;
             environment.SetRequestId(Guid.NewGuid().ToString());
 

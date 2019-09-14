@@ -1,5 +1,4 @@
 ﻿using Microsoft.Owin;
-using Sahurjt.Signalr.Dashboard.Configuration;
 using System;
 
 namespace Sahurjt.Signalr.Dashboard.Core
@@ -13,8 +12,6 @@ namespace Sahurjt.Signalr.Dashboard.Core
         protected TimeSpan PipelineProcessingTime { get; private set; }
 
         protected string ConnectionId { get; set; }
-
-        protected InterceptorConfiguration Configuration { get { return DashboardGlobal.Configuration; } }
 
         protected SignalrInterceptorBase(IOwinContext owinContext) : this(owinContext, TimeSpan.Zero) { }
 
@@ -60,7 +57,7 @@ namespace Sahurjt.Signalr.Dashboard.Core
                     OnSend();
                     break;
                 case RequestType.Poll:
-                    OnPool();
+                    OnPoll();
                     break;
                 case RequestType.Ping:
                     OnPing();
@@ -69,20 +66,20 @@ namespace Sahurjt.Signalr.Dashboard.Core
             OnPreRequest();
         }
 
-        public abstract void OnPreRequest();
-        public abstract void OnPostRequest();
+        protected abstract void OnPreRequest();
+        protected abstract void OnPostRequest();
 
-        public abstract void OnNegotiate();
-        public abstract void AfterNegotiate();
-
-        public abstract void OnConnect();
-        public abstract void OnStart();
-
-        public abstract void OnAbort();
-        public abstract void OnReconnect();
-
-        public abstract void OnSend();
-        public abstract void OnPool();
-        public abstract void OnPing();
+        protected abstract void OnNegotiate();
+        protected abstract void AfterNegotiate();
+        
+        protected abstract void OnConnect();
+        protected abstract void OnStart();
+        
+        protected abstract void OnAbort();
+        protected abstract void OnReconnect();
+        
+        protected abstract void OnSend();
+        protected abstract void OnPoll();
+        protected abstract void OnPing();
     }
 }

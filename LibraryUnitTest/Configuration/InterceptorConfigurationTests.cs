@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Sahurjt.Signalr.Dashboard.Configuration;
 
-namespace Sahurjt.Signalr.Dashboard.Configuration.Tests
+namespace LibraryUnitTest.Configuration
 {
     [TestClass()]
     public class InterceptorConfigurationTests
@@ -14,5 +15,6 @@ namespace Sahurjt.Signalr.Dashboard.Configuration.Tests
             Assert.AreEqual("/dashboard", config.DefaultDashboardRoute);
             Assert.AreEqual("/signalr", config.DefaultSignalrRoute);
         }
+
     }
 }

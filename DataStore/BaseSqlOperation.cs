@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Common;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Sahurjt.Signalr.Dashboard.Extensions;
@@ -14,7 +14,7 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
 
         private readonly ISqlQueryProvider _sqlQueryProvider;
 
-        public BaseSqlOperation(ISqlQueryProvider sqlQueryProvider)
+        protected BaseSqlOperation(ISqlQueryProvider sqlQueryProvider)
         {
             _sqlQueryProvider = sqlQueryProvider;
         }
@@ -122,10 +122,6 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
             }
         }
 
-        protected abstract DbCommand GetCommandParameter(string sql, params object[] parameters);
-
-        protected abstract DbConnection GetDbConnection();
-
         private int ExecuteNonQuery(string sqlQuery, params object[] parameters)
         {
             var result = -1;
@@ -156,5 +152,10 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
             }
             return result;
         }
+
+        protected abstract IDbCommand GetCommandParameter(string sql, params object[] parameters);
+
+        protected abstract IDbConnection GetDbConnection();
+
     }
 }
