@@ -166,7 +166,9 @@
     <Compile Include="Core\DefaultSignalrInterceptorTests.cs" />
     <Compile Include="Core\Message\RequestQueryCollectionTests.cs" />
     <Compile Include="Core\SignalrRequestTests.cs" />
+    <Compile Include="DataStore\DtoCommonTests.cs" />
     <Compile Include="DataStore\SqliteOperationTests.cs" />
+    <Compile Include="DataStore\SqlOperationExceptionTests.cs" />
     <Compile Include="Middleware\SignalrInterceptorMiddlewareTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestEnables\Constants.cs" />

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Common;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Sahurjt.Signalr.Dashboard.Extensions;
@@ -153,9 +153,9 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
             return result;
         }
 
-        protected abstract DbCommand GetCommandParameter(string sql, params object[] parameters);
+        protected abstract IDbCommand GetCommandParameter(string sql, params object[] parameters);
 
-        protected abstract DbConnection GetDbConnection();
+        protected abstract IDbConnection GetDbConnection();
 
     }
 }

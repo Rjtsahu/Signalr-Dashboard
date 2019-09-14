@@ -29,20 +29,20 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
 
         public string GetSql(ExecuteSqlQuery executeSqlEnum)
         {
-            if (ExecuteSqls.ContainsKey(executeSqlEnum))
+            //// if (ExecuteSqls.ContainsKey(executeSqlEnum))
             {
                 return ExecuteSqls[executeSqlEnum];
             }
-            throw new KeyNotFoundException($" {DatabaseProviderName} doesn't provide exec sql query for enum: {executeSqlEnum.ToString()}");
+            //// throw new KeyNotFoundException($" {DatabaseProviderName} doesn't provide exec sql query for enum: {executeSqlEnum.ToString()}");
         }
 
         public string GetSql(SelectSqlQuery selectSqlEnum)
         {
-            if (SelectSqls.ContainsKey(selectSqlEnum))
+            //// if (SelectSqls.ContainsKey(selectSqlEnum))
             {
                 return SelectSqls[selectSqlEnum];
             }
-            throw new KeyNotFoundException($" {DatabaseProviderName} doesn't provide select sql query for enum: {selectSqlEnum.ToString()}");
+            //// throw new KeyNotFoundException($" {DatabaseProviderName} doesn't provide select sql query for enum: {selectSqlEnum.ToString()}");
         }
 
         #region DDL Queries

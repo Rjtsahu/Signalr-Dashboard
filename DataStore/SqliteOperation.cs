@@ -1,6 +1,7 @@
 ﻿using System.Data.SQLite;
 using Sahurjt.Signalr.Dashboard.Extensions;
 using System.Data.Common;
+using System.Data;
 
 namespace Sahurjt.Signalr.Dashboard.DataStore
 {
@@ -16,7 +17,7 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
 
         protected override string ProviderName => "Sqlite3";
 
-        protected override DbCommand GetCommandParameter(string sql, params object[] parameters)
+        protected override IDbCommand GetCommandParameter(string sql, params object[] parameters)
         {
             var sqlCommand = new SQLiteCommand();
             sqlCommand.Parameters.MapSQLiteParameters(sql, parameters);
@@ -24,7 +25,7 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
             return sqlCommand;
         }
 
-        protected override DbConnection GetDbConnection()
+        protected override IDbConnection GetDbConnection()
         {
             return new SQLiteConnection(connectionString);
         }
