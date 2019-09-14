@@ -20,7 +20,7 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
         {
             var sqlCommand = new SQLiteCommand();
             sqlCommand.Parameters.MapSQLiteParameters(sql, parameters);
-
+        
             return sqlCommand;
         }
 

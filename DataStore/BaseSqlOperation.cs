@@ -122,10 +122,6 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
             }
         }
 
-        protected abstract DbCommand GetCommandParameter(string sql, params object[] parameters);
-
-        protected abstract DbConnection GetDbConnection();
-
         private int ExecuteNonQuery(string sqlQuery, params object[] parameters)
         {
             var result = -1;
@@ -156,5 +152,10 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
             }
             return result;
         }
+
+        protected abstract DbCommand GetCommandParameter(string sql, params object[] parameters);
+
+        protected abstract DbConnection GetDbConnection();
+
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Microsoft.Owin;
-using Sahurjt.Signalr.Dashboard.Configuration;
 using System;
 
 namespace Sahurjt.Signalr.Dashboard.Core
