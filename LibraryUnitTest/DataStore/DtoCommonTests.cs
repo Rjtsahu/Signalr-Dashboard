@@ -3,6 +3,7 @@ using Moq;
 using Sahurjt.Signalr.Dashboard.Core;
 using Sahurjt.Signalr.Dashboard.DataStore;
 using Sahurjt.Signalr.Dashboard.DataStore.Dto;
+using Sahurjt.Signalr.Dashboard.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -171,6 +172,8 @@ namespace LibraryUnitTest.DataStore
             Assert.ThrowsException<NotImplementedException>(
                 () => dummyDto.GetSingle(1)
              );
+            LogHelper.Log(dummyDto);
+            LogHelper.SetLogging(false);
         }
 
 

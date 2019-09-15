@@ -9,6 +9,7 @@ using Moq;
 using Sahurjt.Signalr.Dashboard.Core;
 using Sahurjt.Signalr.Dashboard.DataStore;
 using Sahurjt.Signalr.Dashboard.DataStore.Dto;
+using Sahurjt.Signalr.Dashboard.Extensions;
 
 namespace LibraryUnitTest.Core
 {
@@ -269,6 +270,26 @@ namespace LibraryUnitTest.Core
 
             signalrRequest = new SignalrRequest(owinContextMock.Object);
             Assert.IsTrue(dataTracingService.AddRequestTrace(signalrRequest));
+        }
+
+        [TestMethod]
+        public void Test_RequestReadBody_Failure()
+        {
+            var streamMock = new Mock<Stream>();
+            streamMock.Setup(s => s.CanRead).Returns(false);
+
+            owinRequestMock.Setup(s => s.Body).Returns(streamMock.Object);
+            Assert.IsNull(owinRequestMock.Object.ReadBody());
+        }
+
+        [TestMethod]
+        public void Test_ResponseReadBody_Failure()
+        {
+            var streamMock = new Mock<Stream>();
+            streamMock.Setup(s => s.CanRead).Returns(false);
+
+            owinResponseMock.Setup(s => s.Body).Returns(streamMock.Object);
+            Assert.IsNull(owinResponseMock.Object.ReadBody());
         }
     }
 }

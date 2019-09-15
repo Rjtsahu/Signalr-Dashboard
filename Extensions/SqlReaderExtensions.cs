@@ -9,7 +9,7 @@ namespace Sahurjt.Signalr.Dashboard.Extensions
     {
         public static T ToObject<T>(this IDataReader reader)
         {
-            if (reader == null || !reader.Read()) return default(T);
+            if (!reader.Read()) return default(T);
 
             return DbDataReaderToObject<T>(reader);
         }

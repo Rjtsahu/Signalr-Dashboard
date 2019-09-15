@@ -1,9 +1,5 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.Owin;
-using Sahurjt.Signalr.Dashboard.Configuration;
-using Sahurjt.Signalr.Dashboard.Core;
-using Sahurjt.Signalr.Dashboard.DataStore;
-using Sahurjt.Signalr.Dashboard.DataStore.Dto;
 using Sahurjt.Signalr.Dashboard.Helpers;
 
 namespace Sahurjt.Signalr.Dashboard.Middleware
@@ -12,12 +8,10 @@ namespace Sahurjt.Signalr.Dashboard.Middleware
     internal class SignalrDashboardMiddleware : OwinMiddleware
     {
         private readonly string dashboardUrlStartSegment;
-        private readonly InterceptorConfiguration configuration;
 
         public SignalrDashboardMiddleware(OwinMiddleware next, string dashboardUrl) : base(next)
         {
             dashboardUrlStartSegment = dashboardUrl;
-            configuration = DashboardGlobal.Configuration;
         }
 
         /// <summary>
@@ -37,10 +31,10 @@ namespace Sahurjt.Signalr.Dashboard.Middleware
 
             LogHelper.Log("exiting");
 
-            var s = DashboardGlobal.ServiceResolver.GetService<ISqlOperation>();
-            s.Execute(ExecuteSqlQuery.Create_DatabaseTables);
-            var d = new SessionDto();
-            var res = d.GetAll();
+            ////var s = DashboardGlobal.ServiceResolver.GetService<ISqlOperation>();
+            ////s.Execute(ExecuteSqlQuery.Create_DatabaseTables);
+            ////var d = new SessionDto();
+            ////var res = d.GetAll();
         }
 
     }
