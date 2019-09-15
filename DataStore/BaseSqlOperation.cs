@@ -10,7 +10,7 @@ namespace Sahurjt.Signalr.Dashboard.DataStore
 {
     internal abstract class BaseSqlOperation : ISqlOperation
     {
-        protected abstract string ProviderName { get; }
+        public abstract string ProviderName { get; }
 
         private readonly ISqlQueryProvider _sqlQueryProvider;
 

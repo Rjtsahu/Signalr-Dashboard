@@ -52,6 +52,25 @@ namespace LibraryUnitTest.Middleware
             Assert.IsTrue(passed);
         }
 
+        [TestMethod]
+        public void Test_DashboaardMiddleware()
+        {
+
+            IAppBuilder builder = new AppBuilder();
+            builder.Use<SignalrDashboardMiddleware>("/dashboard");
+            var pipelineObj = builder.Build();
+            bool passed;
+            try
+            {
+                pipelineObj.Invoke(GetEnvironmentData());
+                passed = true;
+            }
+            catch
+            {
+                passed = false;
+            }
+            Assert.IsTrue(passed);
+        }
 
         private IDictionary<string, object> GetEnvironmentData()
         {

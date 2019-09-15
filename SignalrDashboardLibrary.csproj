@@ -95,7 +95,6 @@
     <Compile Include="DataStore\SqlOperationException.cs" />
     <Compile Include="DataStore\SqlQueryEnum.cs" />
     <Compile Include="Extensions\OwinExtension.cs" />
-    <Compile Include="Extensions\ServiceResolverExtension.cs" />
     <Compile Include="Extensions\SqlParameterExtensions.cs" />
     <Compile Include="Extensions\SqlReaderExtensions.cs" />
     <Compile Include="Helpers\HttpHelper.cs" />
