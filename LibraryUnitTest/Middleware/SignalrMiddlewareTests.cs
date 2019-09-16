@@ -9,7 +9,7 @@ using System.IO;
 namespace LibraryUnitTest.Middleware
 {
     [TestClass]
-    public class SignalrInterceptorMiddlewareTests
+    public class SignalrMiddlewareTests
     {
 
         [TestMethod]
