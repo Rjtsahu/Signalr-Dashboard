@@ -3,7 +3,7 @@
 ## Web Api Middleware for monitoring Signalr connections.
 
 ### Introduction.
-* There were times with me then we were using signalr in some project, there were some frequent issues with connection at client side, debugging there issue with default transport logs didn't provide much help.
+* There were times with me when we were using signalr in some project, there were some frequent issues with connection at client side, debugging there issue with default transport logs didn't provide much help.
 * The scope of this project is to develop a dashboard which will have all clients/connection information in graphical form to make debugging and performance improvements.
 * The idea of this project is to create a wrpper around Microsoft Signalr (using owin extension middleware)
 
