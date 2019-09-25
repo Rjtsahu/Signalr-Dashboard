@@ -81,6 +81,9 @@
     <Compile Include="Core\Message\Response\NegotiateResponse.cs" />
     <Compile Include="Core\SignalrInterceptorBase.cs" />
     <Compile Include="Core\SignalrRequest.cs" />
+    <Compile Include="Dashboard\DashboardContext.cs" />
+    <Compile Include="Dashboard\Dispatchers\RazorPageDispatcher.cs" />
+    <Compile Include="Dashboard\IDashboardDispatcher.cs" />
     <Compile Include="DataStore\BaseSqlOperation.cs" />
     <Compile Include="DataStore\Dto\DtoExtensions.cs" />
     <Compile Include="DataStore\Dto\HubDataDto.cs" />
