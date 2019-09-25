@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.Owin;
-using Sahurjt.Signalr.Dashboard.Helpers;
+using SignalrDashboard.Helpers;
 
-namespace Sahurjt.Signalr.Dashboard.Middleware
+namespace SignalrDashboard.Middleware
 {
 
     internal class SignalrDashboardMiddleware : OwinMiddleware

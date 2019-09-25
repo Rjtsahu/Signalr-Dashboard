@@ -1,8 +1,8 @@
-﻿using Sahurjt.Signalr.Dashboard.DataStore;
+﻿using SignalrDashboard.DataStore;
 using System;
 using System.Collections.Concurrent;
 
-namespace Sahurjt.Signalr.Dashboard.Core
+namespace SignalrDashboard.Core
 {
     /// <summary>
     /// Service resolver having singleton instances of dependecies.

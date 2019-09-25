@@ -1,5 +1,5 @@
 ﻿
-namespace Sahurjt.Signalr.Dashboard.Core.Message.Response
+namespace SignalrDashboard.Core.Message.Response
 {
     internal class NegotiateResponse 
     {

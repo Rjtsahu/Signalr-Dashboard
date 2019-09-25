@@ -8,7 +8,7 @@
     <ProjectGuid>{C0AFDF90-945B-4378-976B-3319286857B8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Sahurjt.Signalr.Dashboard</RootNamespace>
+    <RootNamespace>SignalrDashboard</RootNamespace>
     <AssemblyName>SignalrDashboardLibrary</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -82,6 +82,8 @@
     <Compile Include="Core\SignalrInterceptorBase.cs" />
     <Compile Include="Core\SignalrRequest.cs" />
     <Compile Include="Dashboard\DashboardContext.cs" />
+    <Compile Include="Dashboard\Dispatchers\JsonApiDispatcher.cs" />
+    <Compile Include="Dashboard\Dispatchers\RawContentDispatcher.cs" />
     <Compile Include="Dashboard\Dispatchers\RazorPageDispatcher.cs" />
     <Compile Include="Dashboard\IDashboardDispatcher.cs" />
     <Compile Include="DataStore\BaseSqlOperation.cs" />
@@ -112,13 +114,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Scripts\jquery-3.4.1.min.js" />
-    <Content Include="Static\css\dashboard-styles.css" />
-    <Content Include="Static\js\dashboard-script.js" />
-    <Content Include="Static\template\_layout.html" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Static\lib\" />
+    <Folder Include="Dashboard\Content\css\" />
+    <Folder Include="Dashboard\Content\js\" />
+    <Folder Include="Dashboard\Content\Pages\" />
+    <Folder Include="Dashboard\Dispatchers\Api\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -6,10 +6,10 @@ using LibraryUnitTest.TestEnables;
 using Microsoft.Owin;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using Sahurjt.Signalr.Dashboard.Core;
-using Sahurjt.Signalr.Dashboard.DataStore;
-using Sahurjt.Signalr.Dashboard.DataStore.Dto;
-using Sahurjt.Signalr.Dashboard.Extensions;
+using SignalrDashboard.Core;
+using SignalrDashboard.DataStore;
+using SignalrDashboard.DataStore.Dto;
+using SignalrDashboard.Extensions;
 
 namespace LibraryUnitTest.Core
 {

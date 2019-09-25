@@ -1,4 +1,4 @@
-﻿namespace Sahurjt.Signalr.Dashboard.DataStore
+﻿namespace SignalrDashboard.DataStore
 {
     // Use Prefix "GetAll_" for fetching all records from a table.
     internal enum SelectSqlQuery

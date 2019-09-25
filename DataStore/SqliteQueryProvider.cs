@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Sahurjt.Signalr.Dashboard.DataStore
+namespace SignalrDashboard.DataStore
 {
     internal class SqliteQueryProvider : ISqlQueryProvider
     {

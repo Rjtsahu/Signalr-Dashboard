@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Sahurjt.Signalr.Dashboard.Dashboard.Dispatchers
+namespace SignalrDashboard.Dashboard.Dispatchers
 {
     internal class RawContentDispatcher : IDashboardDispatcher
     {

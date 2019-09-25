@@ -1,8 +1,8 @@
 ﻿using Microsoft.Owin;
-using Sahurjt.Signalr.Dashboard.Helpers;
+using SignalrDashboard.Helpers;
 using System;
 
-namespace Sahurjt.Signalr.Dashboard.Core
+namespace SignalrDashboard.Core
 {
     internal class DefaultSignalrInterceptor : SignalrInterceptorBase
     {

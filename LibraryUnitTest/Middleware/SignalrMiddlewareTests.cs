@@ -2,7 +2,7 @@
 using Microsoft.Owin.Builder;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Owin;
-using Sahurjt.Signalr.Dashboard.Middleware;
+using SignalrDashboard.Middleware;
 using System.Collections.Generic;
 using System.IO;
 

@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Sahurjt.Signalr.Dashboard.Configuration;
+using SignalrDashboard.Configuration;
 
 namespace LibraryUnitTest.Configuration
 {

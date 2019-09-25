@@ -1,6 +1,6 @@
 ﻿using Microsoft.Owin;
 
-namespace Sahurjt.Signalr.Dashboard.Dashboard
+namespace SignalrDashboard.Dashboard
 {
     internal class DashboardContext
     {

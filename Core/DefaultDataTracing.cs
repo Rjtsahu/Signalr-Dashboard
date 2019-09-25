@@ -1,11 +1,11 @@
 ﻿using Newtonsoft.Json;
-using Sahurjt.Signalr.Dashboard.Core.Message.Response;
-using Sahurjt.Signalr.Dashboard.DataStore;
-using Sahurjt.Signalr.Dashboard.DataStore.Dto;
-using Sahurjt.Signalr.Dashboard.Extensions;
+using SignalrDashboard.Core.Message.Response;
+using SignalrDashboard.DataStore;
+using SignalrDashboard.DataStore.Dto;
+using SignalrDashboard.Extensions;
 using System;
 
-namespace Sahurjt.Signalr.Dashboard.Core
+namespace SignalrDashboard.Core
 {
     internal class DefaultDataTracing : IDataTracing
     {

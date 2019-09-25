@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Sahurjt.Signalr.Dashboard.Dashboard
+namespace SignalrDashboard.Dashboard
 {
     internal interface IDashboardDispatcher
     {

@@ -1,9 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using Sahurjt.Signalr.Dashboard.Core;
-using Sahurjt.Signalr.Dashboard.DataStore;
-using Sahurjt.Signalr.Dashboard.DataStore.Dto;
-using Sahurjt.Signalr.Dashboard.Helpers;
+using SignalrDashboard.Core;
+using SignalrDashboard.DataStore;
+using SignalrDashboard.DataStore.Dto;
+using SignalrDashboard.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;

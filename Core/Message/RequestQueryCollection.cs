@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Sahurjt.Signalr.Dashboard.Core.Message
+namespace SignalrDashboard.Core.Message
 {
     internal class RequestQueryCollection
     {

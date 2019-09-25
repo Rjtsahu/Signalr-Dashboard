@@ -1,9 +1,9 @@
 ﻿using Microsoft.Owin;
-using Sahurjt.Signalr.Dashboard.Extensions;
+using SignalrDashboard.Extensions;
 using System;
-using Sahurjt.Signalr.Dashboard.Core.Message;
+using SignalrDashboard.Core.Message;
 
-namespace Sahurjt.Signalr.Dashboard.Core
+namespace SignalrDashboard.Core
 {
     internal enum RequestType
     {

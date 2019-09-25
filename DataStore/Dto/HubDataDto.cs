@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Sahurjt.Signalr.Dashboard.DataStore.Dto
+namespace SignalrDashboard.DataStore.Dto
 {
     internal class HubDataDto : IDataTableObject
     {

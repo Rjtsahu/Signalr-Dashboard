@@ -1,5 +1,5 @@
 ﻿
-namespace Sahurjt.Signalr.Dashboard.Core
+namespace SignalrDashboard.Core
 {
     internal interface IDataTracing
     {

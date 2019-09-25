@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Sahurjt.Signalr.Dashboard.DataStore;
+using SignalrDashboard.DataStore;
 using System.Reflection;
 
 namespace LibraryUnitTest.DataStore

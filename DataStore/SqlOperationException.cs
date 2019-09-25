@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Sahurjt.Signalr.Dashboard.DataStore
+namespace SignalrDashboard.DataStore
 {
     internal class SqlOperationException : Exception
     {

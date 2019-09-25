@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
-using Sahurjt.Signalr.Dashboard.Extensions;
-using Sahurjt.Signalr.Dashboard.Helpers;
+using SignalrDashboard.Extensions;
+using SignalrDashboard.Helpers;
 
-namespace Sahurjt.Signalr.Dashboard.DataStore
+namespace SignalrDashboard.DataStore
 {
     internal abstract class BaseSqlOperation : ISqlOperation
     {
