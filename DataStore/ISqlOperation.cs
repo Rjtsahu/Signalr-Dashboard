@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Sahurjt.Signalr.Dashboard.DataStore
+namespace SignalrDashboard.DataStore
 {
     internal interface ISqlOperation
     {

@@ -1,8 +1,8 @@
 ﻿using System.Data.SQLite;
-using Sahurjt.Signalr.Dashboard.Extensions;
+using SignalrDashboard.Extensions;
 using System.Data;
 
-namespace Sahurjt.Signalr.Dashboard.DataStore
+namespace SignalrDashboard.DataStore
 {
     internal class SqliteOperation : BaseSqlOperation
     {

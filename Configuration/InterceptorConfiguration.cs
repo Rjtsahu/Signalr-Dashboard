@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Sahurjt.Signalr.Dashboard.Configuration
+namespace SignalrDashboard.Configuration
 {
     public class InterceptorConfiguration
     {

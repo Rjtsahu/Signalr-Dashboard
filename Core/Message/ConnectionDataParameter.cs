@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Sahurjt.Signalr.Dashboard.Core.Message
+namespace SignalrDashboard.Core.Message
 {
     /// <summary>
     /// This class represents connectionData parameter which is sent in almost every request in QueryString.

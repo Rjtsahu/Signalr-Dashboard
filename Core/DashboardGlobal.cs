@@ -1,7 +1,7 @@
-﻿using Sahurjt.Signalr.Dashboard.Configuration;
+﻿using SignalrDashboard.Configuration;
 using System;
 
-namespace Sahurjt.Signalr.Dashboard.Core
+namespace SignalrDashboard.Core
 {
     public static class DashboardGlobal
     {

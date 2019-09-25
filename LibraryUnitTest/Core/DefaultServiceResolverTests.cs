@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Sahurjt.Signalr.Dashboard.Core;
-using Sahurjt.Signalr.Dashboard.DataStore.Dto;
+using SignalrDashboard.Core;
+using SignalrDashboard.DataStore.Dto;
 using System;
 
 namespace LibraryUnitTest.Core

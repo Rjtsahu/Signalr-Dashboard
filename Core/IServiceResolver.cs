@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Sahurjt.Signalr.Dashboard.Core
+namespace SignalrDashboard.Core
 {
     public interface IServiceResolver
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 
-namespace Sahurjt.Signalr.Dashboard.Extensions
+namespace SignalrDashboard.Extensions
 {
     internal static class SqlReaderExtensions
     {

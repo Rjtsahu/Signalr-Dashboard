@@ -1,8 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Moq.Protected;
-using Sahurjt.Signalr.Dashboard.DataStore;
-using Sahurjt.Signalr.Dashboard.DataStore.Dto;
+using SignalrDashboard.DataStore;
+using SignalrDashboard.DataStore.Dto;
 using System.Data;
 using System.Threading.Tasks;
 

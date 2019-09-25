@@ -1,10 +1,10 @@
 ﻿using Owin;
 using Microsoft.Owin;
-using Sahurjt.Signalr.Dashboard.Middleware;
-using Sahurjt.Signalr.Dashboard.Core;
+using SignalrDashboard.Middleware;
+using SignalrDashboard.Core;
 using System.IO;
 
-namespace Sahurjt.Signalr.Dashboard.Extensions
+namespace SignalrDashboard.Extensions
 {
     public static class OwinExtension
     {

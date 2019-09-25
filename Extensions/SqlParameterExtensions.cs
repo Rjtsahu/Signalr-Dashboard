@@ -3,7 +3,7 @@ using System.Data.SQLite;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace Sahurjt.Signalr.Dashboard.Extensions
+namespace SignalrDashboard.Extensions
 {
     internal static class SqlParameterExtensions
     {

@@ -2,7 +2,7 @@
 using System;
 using System.IO;
 
-namespace Sahurjt.Signalr.Dashboard.Helpers
+namespace SignalrDashboard.Helpers
 {
     public class LogHelper
     {

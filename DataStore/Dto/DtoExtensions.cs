@@ -1,8 +1,8 @@
-﻿using Sahurjt.Signalr.Dashboard.Core;
+﻿using SignalrDashboard.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-namespace Sahurjt.Signalr.Dashboard.DataStore.Dto
+namespace SignalrDashboard.DataStore.Dto
 {
     internal static class DtoExtensions
     {

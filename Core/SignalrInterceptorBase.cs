@@ -1,7 +1,7 @@
 ﻿using Microsoft.Owin;
 using System;
 
-namespace Sahurjt.Signalr.Dashboard.Core
+namespace SignalrDashboard.Core
 {
     internal abstract class SignalrInterceptorBase
     {

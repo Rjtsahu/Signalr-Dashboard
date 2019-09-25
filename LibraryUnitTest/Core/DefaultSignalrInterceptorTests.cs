@@ -2,7 +2,7 @@
 using Microsoft.Owin;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using Sahurjt.Signalr.Dashboard.Core;
+using SignalrDashboard.Core;
 using System;
 
 namespace LibraryUnitTest.Core

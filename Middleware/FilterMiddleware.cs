@@ -1,10 +1,10 @@
 ﻿using Microsoft.Owin;
-using Sahurjt.Signalr.Dashboard.Extensions;
+using SignalrDashboard.Extensions;
 using System;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace Sahurjt.Signalr.Dashboard.Middleware
+namespace SignalrDashboard.Middleware
 {
 
     internal abstract class FilterMiddleware : OwinMiddleware

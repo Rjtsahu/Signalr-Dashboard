@@ -1,6 +1,6 @@
 ﻿using LibraryUnitTest.TestEnables;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Sahurjt.Signalr.Dashboard.Core.Message;
+using SignalrDashboard.Core.Message;
 using System;
 
 namespace LibraryUnitTest.Core.Message

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.Owin;
-using Sahurjt.Signalr.Dashboard.Core;
-using Sahurjt.Signalr.Dashboard.Helpers;
+using SignalrDashboard.Core;
+using SignalrDashboard.Helpers;
 
-namespace Sahurjt.Signalr.Dashboard.Middleware
+namespace SignalrDashboard.Middleware
 {
     internal class SignalrInterceptorMiddleware : FilterMiddleware
     {

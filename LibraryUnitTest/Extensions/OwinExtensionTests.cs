@@ -1,7 +1,7 @@
 ﻿using Microsoft.Owin.Builder;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Owin;
-using Sahurjt.Signalr.Dashboard.Extensions;
+using SignalrDashboard.Extensions;
 
 namespace LibraryUnitTest.Extensions
 {
