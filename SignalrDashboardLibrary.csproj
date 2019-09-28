@@ -82,10 +82,15 @@
     <Compile Include="Core\SignalrInterceptorBase.cs" />
     <Compile Include="Core\SignalrRequest.cs" />
     <Compile Include="Dashboard\DashboardContext.cs" />
+    <Compile Include="Dashboard\DashboardRequest.cs" />
+    <Compile Include="Dashboard\DashboardResponse.cs" />
+    <Compile Include="Dashboard\DashboardRoutes.cs" />
     <Compile Include="Dashboard\Dispatchers\JsonApiDispatcher.cs" />
     <Compile Include="Dashboard\Dispatchers\RawContentDispatcher.cs" />
     <Compile Include="Dashboard\Dispatchers\RazorPageDispatcher.cs" />
     <Compile Include="Dashboard\IDashboardDispatcher.cs" />
+    <Compile Include="Dashboard\ResourceNotExistException.cs" />
+    <Compile Include="Dashboard\RouteCollection.cs" />
     <Compile Include="DataStore\BaseSqlOperation.cs" />
     <Compile Include="DataStore\Dto\DtoExtensions.cs" />
     <Compile Include="DataStore\Dto\HubDataDto.cs" />
@@ -114,10 +119,21 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Dashboard\Content\css\" />
-    <Folder Include="Dashboard\Content\js\" />
     <Folder Include="Dashboard\Content\Pages\" />
     <Folder Include="Dashboard\Dispatchers\Api\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Dashboard\Content\js\bootstrap.min.js" />
+    <EmbeddedResource Include="Dashboard\Content\js\Chart.min.js" />
+    <EmbeddedResource Include="Dashboard\Content\js\chartjs-plugin-streaming.min.js" />
+    <EmbeddedResource Include="Dashboard\Content\js\jquery-2.1.4.min.js" />
+    <EmbeddedResource Include="Dashboard\Content\js\moment-with-locales.min.js" />
+    <EmbeddedResource Include="Dashboard\Content\js\moment.min.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Dashboard\Content\css\bootstrap.min.css" />
+    <EmbeddedResource Include="Dashboard\Content\css\dashboard.css" />
+    <EmbeddedResource Include="Dashboard\Content\js\dashboard.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

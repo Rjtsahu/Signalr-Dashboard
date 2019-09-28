@@ -4,10 +4,15 @@ using System.Text.RegularExpressions;
 
 namespace SignalrDashboard.Dashboard
 {
-    internal class RouteCollection : IRouteCollection
+    internal class RouteCollection 
     {
         private readonly IDictionary<string, IDashboardDispatcher> _dispatchers = new Dictionary<string, IDashboardDispatcher>();
 
+        /// <summary>
+        /// Adds a route pattern to route-collection
+        /// </summary>
+        /// <param name="pathPattern">url path pattern.</param>
+        /// <param name="dashboardDispatcher">dispatcher class to be executed when a path matches.</param>
         public void AddRoute(string pathPattern, IDashboardDispatcher dashboardDispatcher)
         {
             if (string.IsNullOrEmpty(pathPattern)) throw new ArgumentNullException("pathPattern");
@@ -17,6 +22,12 @@ namespace SignalrDashboard.Dashboard
             _dispatchers.Add(pathPattern, dashboardDispatcher);
         }
 
+
+        /// <summary>
+        /// Finds a matching path from the route collection using regEx.
+        /// </summary>
+        /// <param name="path">url path</param>
+        /// <returns>tuple of dispatcher to be executed and matched groups if any.</returns>
         public Tuple<IDashboardDispatcher, Match> FindDispatcherForRoute(string path)
         {
             if (path.Length == 0) path = "/";

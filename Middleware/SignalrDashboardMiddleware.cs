@@ -1,5 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System.IO;
+using System.Reflection;
+using System.Threading.Tasks;
 using Microsoft.Owin;
+using SignalrDashboard.Dashboard;
 using SignalrDashboard.Helpers;
 
 namespace SignalrDashboard.Middleware
@@ -35,6 +38,9 @@ namespace SignalrDashboard.Middleware
             ////s.Execute(ExecuteSqlQuery.Create_DatabaseTables);
             ////var d = new SessionDto();
             ////var res = d.GetAll();
+
+            var r = DashboardRoutes.Routes.FindDispatcherForRoute(environment.Request.Path.Value);
+          // var res = r.Item1.Dispatch(new DashboardContext(environment));
         }
 
     }
