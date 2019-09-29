@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.Owin;
-using SignalrDashboard.Helpers;
+using SignalrDashboard.Dashboard;
 
 namespace SignalrDashboard.Middleware
 {
@@ -21,21 +21,32 @@ namespace SignalrDashboard.Middleware
         /// <returns>async task for next middleware in pipeline</returns>
         public override async Task Invoke(IOwinContext environment)
         {
-            LogHelper.Log("entering");
 
-            LogHelper.Log(" signalrUrlStartSegment", dashboardUrlStartSegment);
+            var requestPath = environment.Request.Path.Value.Substring(environment.Request.Path.Value.IndexOf(dashboardUrlStartSegment) + dashboardUrlStartSegment.Length);
+            var dispatcher = DashboardRoutes.Routes.FindDispatcherForRoute(requestPath);
 
-            LogHelper.Log("  request url ", environment.Request.Path);
-            await Next.Invoke(environment);
-            LogHelper.Log($"  request url ", environment.Response.StatusCode);
+            if (dispatcher == null)
+            {
+                await SendNotFound(environment);
+            }
+            else
+            {
+                try
+                {
+                    await dispatcher.Item1.Dispatch(new DashboardContext(environment));
+                }
+                catch (ResourceNotExistException e)
+                {
+                    await SendNotFound(environment, "Not found: " + e._resourceName);
+                }
 
-            LogHelper.Log("exiting");
-
-            ////var s = DashboardGlobal.ServiceResolver.GetService<ISqlOperation>();
-            ////s.Execute(ExecuteSqlQuery.Create_DatabaseTables);
-            ////var d = new SessionDto();
-            ////var res = d.GetAll();
+            }
         }
 
+        private async Task SendNotFound(IOwinContext owinContext, string errorMessage = "Resource not found")
+        {
+            owinContext.Response.StatusCode = 404;
+            await owinContext.Response.WriteAsync(errorMessage);
+        }
     }
 }

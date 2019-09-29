@@ -1,4 +1,5 @@
-﻿using SignalrDashboard.DataStore;
+﻿using SignalrDashboard.Dashboard;
+using SignalrDashboard.DataStore;
 using System;
 using System.Collections.Concurrent;
 
@@ -24,6 +25,7 @@ namespace SignalrDashboard.Core
             Register<ISqlOperation, SqliteOperation>(() => new SqliteOperation(DashboardGlobal.Configuration.ConnectionString));
 
             Register<IDataTracing, DefaultDataTracing>(() => new DefaultDataTracing(GetService<ISqlOperation>()));
+
         }
 
         public TInterface GetService<TInterface>()

@@ -4,11 +4,13 @@ namespace SignalrDashboard.Dashboard
 {
     internal class DashboardContext
     {
-        private readonly OwinContext _owinContext;
+        public DashboardRequest Request { get; private set; }
+        public DashboardResponse Response { get; private set; }
 
-        public DashboardContext(OwinContext owinContext)
+        public DashboardContext(IOwinContext owinContext)
         {
-            _owinContext = owinContext;
+            Request = new DashboardRequest(owinContext);
+            Response = new DashboardResponse(owinContext);
         }
     }
 }
