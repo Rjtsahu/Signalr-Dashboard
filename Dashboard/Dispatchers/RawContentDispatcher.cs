@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace SignalrDashboard.Dashboard.Dispatchers
 {
@@ -26,7 +27,7 @@ namespace SignalrDashboard.Dashboard.Dispatchers
 
         public async Task Dispatch(DashboardContext dashboardContext)
         {
-            var resourceName = GetResourceFileName(dashboardContext.Request.Path);
+            var resourceName = GetUrlDecodedResourceFileName(dashboardContext.Request.Path);
 
             dashboardContext.Response.ContentType = _contentType;
             dashboardContext.Response.SetExpire(DateTimeOffset.Now.AddMonths(1));
@@ -49,6 +50,12 @@ namespace SignalrDashboard.Dashboard.Dispatchers
 
             // Get resource name for request query.
             return urlPath.Substring(urlPath.LastIndexOf('/') + 1);
+        }
+
+        private string GetUrlDecodedResourceFileName(string urlPath)
+        {
+            // replace . in request url with @ ie %40
+            return GetResourceFileName(HttpUtility.UrlDecode(urlPath))?.Replace('@', '.');
         }
     }
 }

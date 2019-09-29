@@ -10,12 +10,12 @@ namespace SignalrDashboard.Dashboard
         {
             Routes = new RouteCollection();
 
-            Routes.AddRoute("/js[0-9]+", new RawContentDispatcher(
+            Routes.AddRoute("/js/(?<FileName>.+)", new RawContentDispatcher(
                 "application/javascript",
                 GetResourcePath("js")
                 ));
 
-            Routes.AddRoute("/css[0-9]+", new RawContentDispatcher(
+            Routes.AddRoute("/css/(?<FileName>.+)", new RawContentDispatcher(
                   "text/css",
                     GetResourcePath("css")
                     ));
